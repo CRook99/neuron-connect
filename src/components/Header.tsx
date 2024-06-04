@@ -1,17 +1,35 @@
-import './Header.css'
+import "./Header.css";
+
 
 function Header() {
-    return (
-        <div className="header">
-            <div className="header_left">
-                <img className="logo" src="public\NeuroConnect.png" alt="NeuroConnect"></img>
-            </div>
-            <div className="header_right">
-                <p className="about">About</p>
-            </div>
+  return (
+    <>
+      <header className="header">
+        <div className="logo">
+          <i className="logo-image" />
         </div>
-        
-    )
+        <nav className="navbar">
+          <a href="/about">About</a>
+        </nav>
+      </header>
+    </>
+  );
 }
 
-export default Header
+
+// function Header() {
+//   return (
+//     <>
+//       <nav className="navbar">
+//         <div className="navbar-container">
+//           <i className="logo-icon" />
+//           <div className="about">
+//             <p>About</p>
+//           </div>
+//         </div>
+//       </nav>
+//     </>
+//   );
+// }
+
+export default Header;
