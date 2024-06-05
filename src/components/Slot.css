@@ -1,11 +1,20 @@
 .slot {
-  width: 100px;
-  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 64px;
+  height: 64px;
+  margin: 5px;
   border-radius: 10px;
-  background-color: #F4EDEA;
   transition: background-color 0.1s ease;
 }
 
 .slot:hover {
   background-color: #e4d2cb;
+}
+
+.peg {
+  width: 25%;
+  height: 25%;
 }

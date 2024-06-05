@@ -4,7 +4,7 @@ const Slot = () => {
   return (
     <>
       <div className="slot">
-        
+        <img className="peg" src="./Peg.png" />
       </div>
     </>
   )
