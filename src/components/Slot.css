@@ -18,5 +18,6 @@
   width: 25%;
   height: 25%;
 
+  pointer-events: none;
   user-select: none;
 }
