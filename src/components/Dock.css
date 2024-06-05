@@ -1,0 +1,14 @@
+.dock {
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  right: 25%;
+
+  height: 15vh;
+  width: 50%;
+
+  border-radius: 10px 10px 0 0;
+  border: 2px solid #1F271B;
+  border-bottom-style: none;
+  background-color: #F4EDEA;
+}
