@@ -9,6 +9,8 @@
 
 .board {
   width: auto;
+
+  user-select: none;
 }
 
 .row {
