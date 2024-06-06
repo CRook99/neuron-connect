@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./Slot.css";
 import { useDrop } from "react-dnd";
+import Neuron from "./Neuron";
 
 const Slot = () => {
-  const handleDrop = () => {
-    console.log("Dropped item");
-  };
+  const handleDrop = () => {};
 
-  const [neuron, setNeuron] = useState();
-  {
-  }
+  const neuron = useRef(null); // Reference to currently slotted neuron
 
   const [{ isOver }, drop] = useDrop({
     accept: "neuron",
@@ -20,8 +17,11 @@ const Slot = () => {
   });
 
   const style = {
-    transition: "background-color 0.1s ease",
+    transition: "background-color 0.1s ease, border 0.1s ease",
     backgroundColor: isOver ? "#e4d2cb" : "#F4EDEA",
+    border: isOver
+      ? "2px solid rgba(221, 198, 189, 1)"
+      : "2px solid rgba(221, 198, 189, 0)",
   };
 
   return (
