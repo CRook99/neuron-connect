@@ -17,13 +17,15 @@
   color: #1F271B;
   font-family: "Quicksand";
   font-weight: 600;
+
+  user-select: none;
 }
 
 .navbar {
   overflow: hidden;
 }
 
-.navbar p {
+.navbar div {
   float: left;
   display: block;
   text-align: center;
@@ -34,8 +36,10 @@
   font-family: "Quicksand";
   font-weight: 400;
   transition: background-color 0.1s ease;
+
+  user-select: none;
 }
 
-.navbar p:hover {
+.navbar div:hover {
   background-color: #e4d2cb;
 }

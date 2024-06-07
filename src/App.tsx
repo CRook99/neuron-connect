@@ -3,6 +3,7 @@ import Dock from "./components/Dock";
 import Header from "./components/Header";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import HelpSidebar from "./components/HelpSidebar";
 
 function App() {
   return (
