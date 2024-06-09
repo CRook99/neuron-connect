@@ -1,3 +1,6 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
 .sidebar {
   position: absolute;
   top: 50%;
@@ -5,6 +8,9 @@
   transform: translate(0%, -50%);
   width: 40vw;
   height: 75vh;
+
+  display: flex;
+  flex-direction: column;
 
   background-color: #f6f1ee;
   border: 3px solid #1F271B;
@@ -18,8 +24,9 @@
   padding: 20px;
 }
 
-
-.sidebar h1 {
+.sidebar h1,
+.sidebar h2 {
+  height: auto;
   font-family: "Quicksand";
   margin-top: 0px;
   margin-bottom: 20px;
@@ -31,4 +38,23 @@
   font-weight: 500;
   margin: 0;
   color: #1F271B;
+}
+
+.slider {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+  font-size: 24px;
+}
+
+.slick-prev {
+  left: -10px;
+}
+
+.slick-next {
+  right: -10px;
 }
