@@ -3,7 +3,11 @@ import Slider from "react-slick";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const HelpSidebar = () => {
+interface SidebarProps {
+  isHelpActive: boolean;
+}
+
+const HelpSidebar = (props: SidebarProps) => {
   const [active, setActive] = useState(false);
 
   const sliderSettings = {
