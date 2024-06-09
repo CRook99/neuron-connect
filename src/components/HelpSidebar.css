@@ -6,8 +6,10 @@
   top: 12.5%;
   right: 0;
   transform: translateY(-50%);
-  width: 40vw;
+  width: 35vw;
   height: 75vh;
+
+  z-index: 1000;
 }
 
 .sidebar {

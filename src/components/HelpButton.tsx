@@ -8,7 +8,6 @@ interface HelpButtonProps {
 
 const HelpButton = (props: HelpButtonProps) => {
   const [hovered, setHovered] = useState(false);
-  const [active, setActive] = useState(false);
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -16,11 +15,6 @@ const HelpButton = (props: HelpButtonProps) => {
 
   const handleMouseLeave = () => {
     setHovered(false);
-  };
-
-  const handleClick = () => {
-    //setActive(!active);
-    //props.isHelpActive = !props.isHelpActive;
   };
 
   const style = {

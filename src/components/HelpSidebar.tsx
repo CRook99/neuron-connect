@@ -1,6 +1,5 @@
 import "./HelpSidebar.css";
 import Slider from "react-slick";
-import { useState } from "react";
 import { motion } from "framer-motion";
 
 interface SidebarProps {
@@ -8,8 +7,7 @@ interface SidebarProps {
 }
 
 const HelpSidebar = (props: SidebarProps) => {
-  const [active, setActive] = useState(false);
-
+  // Settings for carousel
   const sliderSettings = {
     dots: true,
     infinite: false,
@@ -18,21 +16,18 @@ const HelpSidebar = (props: SidebarProps) => {
     slidesToScroll: 1,
   };
 
-  const handleOnClick = () => {
-    setActive(!active);
-  };
-
   return (
     <>
       <motion.div
         className="container"
         layout
         initial={{ x: "100%" }}
-        animate={{ x: active ? "0%" : "100%" }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        animate={{ x: props.isHelpActive ? "0%" : "100%" }}
+        transition={{ duration: 0.4, ease: "circOut" }}
       >
         <div className="sidebar">
           <h1>How to use NeuroConnect</h1>
+
           <Slider {...sliderSettings} className="slider">
             <div>
               <p>
@@ -42,14 +37,13 @@ const HelpSidebar = (props: SidebarProps) => {
                 pretium, ex est maximus diam, sed fringilla diam ipsum a augue.
               </p>
             </div>
+
             <div>
               <h2>Types of neurons</h2>
             </div>
           </Slider>
         </div>
       </motion.div>
-
-      <button onClick={handleOnClick}>Click me</button>
     </>
   );
 };

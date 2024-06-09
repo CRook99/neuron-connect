@@ -18,10 +18,14 @@ function App() {
           onClick={() => setIsHelpActive(!isHelpActive)}
         />
       </Header>
+
       <HelpSidebar isHelpActive={isHelpActive} />
+
       <div>
         <Board rows={8} cols={8} />
       </div>
+
+      <Dock />
     </DndProvider>
   );
 }

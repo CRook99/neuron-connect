@@ -1,5 +1,4 @@
 import "./Header.css";
-import { useState } from "react";
 
 interface HeaderProps {
   children: React.ReactNode;
