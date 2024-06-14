@@ -1,5 +1,6 @@
 import "./Dock.css";
 import NeuronSupply from "./NeuronSupply";
+import { Neurons } from "./Neurons";
 
 const Dock = () => {
   return (
@@ -7,19 +8,14 @@ const Dock = () => {
       <div className="dock">
         <div className="sub-neurons">
           <NeuronSupply
-            title="Neuron A"
-            type="neuron-a"
+            title="Excitatory"
+            type={Neurons.Excitatory}
             imgPath="/NeuronA.png"
           />
           <NeuronSupply
-            title="Neuron B"
-            type="neuron-b"
+            title="Inhibitory"
+            type={Neurons.Inhibitory}
             imgPath="/NeuronB.png"
-          />
-          <NeuronSupply
-            title="Neuron C"
-            type="neuron-c"
-            imgPath="/NeuronC.png"
           />
         </div>
         <div className="sub-tools"></div>

@@ -14,11 +14,6 @@
   transition: background-color 0.1s ease;
 }
 
-.slot.over,
-.slot:hover {
-  background-color: #e4d2cb;
-}
-
 .peg {
   width: 25%;
   height: 25%;

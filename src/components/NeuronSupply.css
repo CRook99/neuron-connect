@@ -18,10 +18,6 @@
   transition: background-color 0.1s ease;
 }
 
-.neuron-container:hover {
-  background-color: #e4d2cb;
-}
-
 .neuron {
   width: 84px;
   height: 84px;
@@ -33,7 +29,7 @@
 
 .title {
   font-family: "Quicksand";
-  font-weight: 400;
+  font-weight: 500;
   color: #1F271B;
   font-size: 16px;
 

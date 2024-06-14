@@ -1,7 +1,19 @@
 import "./Neuron.css";
+import { Neurons } from "./Neurons";
 
-const Neuron = () => {
-  return <div></div>;
+interface NeuronProps {
+  imgPath: string;
+  neuronType: Neurons;
+}
+
+const Neuron = (props: NeuronProps) => {
+  return (
+    <>
+      <div className="neuron">
+        <img src={props.imgPath} />
+      </div>
+    </>
+  );
 };
 
 export default Neuron;

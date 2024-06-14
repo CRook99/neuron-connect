@@ -1,13 +1,17 @@
 import "./NeuronDND.css";
 import { useDrag } from "react-dnd";
+import { motion } from "framer-motion";
+import { Neurons } from "./Neurons";
 
 interface NeuronDNDProps {
   imgPath: string;
+  type: Neurons;
 }
 
 const NeuronDND = (props: NeuronDNDProps) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "neuron",
+    item: { type: props.type },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -19,9 +23,9 @@ const NeuronDND = (props: NeuronDNDProps) => {
 
   return (
     <>
-      <div ref={drag} style={style}>
+      <motion.div ref={drag} style={style} whileHover={{ scale: 1.2 }}>
         <img src={props.imgPath} className="neuron"></img>
-      </div>
+      </motion.div>
     </>
   );
 };

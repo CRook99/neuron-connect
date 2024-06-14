@@ -1,33 +1,35 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./Slot.css";
 import { useDrop } from "react-dnd";
 import Neuron from "./Neuron";
+import { Neurons } from "./Neurons";
 
 const Slot = () => {
-  const handleDrop = () => {};
+  const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
 
-  const neuron = useRef(null); // Reference to currently slotted neuron
+  const addNeuron = () => {
+    setNeuron(
+      <Neuron imgPath="./NeuronA.png" neuronType={Neurons.Excitatory}></Neuron>
+    );
+  };
 
   const [{ isOver }, drop] = useDrop({
     accept: "neuron",
-    drop: (item) => handleDrop(),
+    drop: (item) => addNeuron(),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   });
 
   const style = {
-    transition: "background-color 0.1s ease, border 0.1s ease",
+    transition: "background-color 0.1s ease",
     backgroundColor: isOver ? "#e4d2cb" : "#F4EDEA",
-    border: isOver
-      ? "2px solid rgba(221, 198, 189, 1)"
-      : "2px solid rgba(221, 198, 189, 0)",
   };
 
   return (
     <>
-      <div className={`slot ${isOver ? "over" : ""}`} ref={drop} style={style}>
-        <img className="peg" src="./Peg.png" />
+      <div className="slot" ref={drop} style={style}>
+        {neuron ? <>{neuron}</> : <img className="peg" src="./Peg.png" />}
       </div>
     </>
   );
