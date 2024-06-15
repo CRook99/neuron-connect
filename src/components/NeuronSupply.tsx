@@ -1,4 +1,3 @@
-import Neuron from "./Neuron";
 import NeuronDND from "./NeuronDND";
 import "./NeuronSupply.css";
 import { Neurons } from "./Neurons";

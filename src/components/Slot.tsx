@@ -3,19 +3,26 @@ import "./Slot.css";
 import { useDrop } from "react-dnd";
 import Neuron from "./Neuron";
 import { Neurons } from "./Neurons";
+import ExcitatoryNeuron from "./ExcitatoryNeuron";
+import InhibitoryNeuron from "./InhibitoryNeuron";
 
 const Slot = () => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
 
-  const addNeuron = () => {
-    setNeuron(
-      <Neuron imgPath="./NeuronA.png" neuronType={Neurons.Excitatory}></Neuron>
-    );
+  const addNeuron = (type: Neurons) => {
+    switch (type) {
+      case Neurons.Excitatory:
+        setNeuron(<ExcitatoryNeuron />);
+        return;
+      case Neurons.Inhibitory:
+        setNeuron(<InhibitoryNeuron />);
+        return;
+    }
   };
 
   const [{ isOver }, drop] = useDrop({
     accept: "neuron",
-    drop: (item) => addNeuron(),
+    drop: (item: any) => addNeuron(item.props.type),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),

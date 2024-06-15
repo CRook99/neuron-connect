@@ -9,4 +9,7 @@
 .neuron img {
   width: 125%;
   height: 125%;
+
+  user-select: none;
+  pointer-events: none;
 }

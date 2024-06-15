@@ -6,7 +6,7 @@ interface NeuronProps {
   neuronType: Neurons;
 }
 
-const Neuron = (props: NeuronProps) => {
+export const Neuron = (props: NeuronProps) => {
   return (
     <>
       <div className="neuron">
