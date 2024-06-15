@@ -24,7 +24,7 @@ const NeuronDND = (props: NeuronDNDProps) => {
   return (
     <>
       <motion.div ref={drag} style={style} whileHover={{ scale: 1.2 }}>
-        <img src={props.imgPath} className="neuron"></img>
+        <img src={props.imgPath} className="dnd_neuron"></img>
       </motion.div>
     </>
   );

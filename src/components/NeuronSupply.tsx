@@ -1,3 +1,4 @@
+import Neuron from "./Neuron";
 import NeuronDND from "./NeuronDND";
 import "./NeuronSupply.css";
 import { Neurons } from "./Neurons";
@@ -11,9 +12,9 @@ interface NeuronSupplyProps {
 const NeuronSupply = (props: NeuronSupplyProps) => {
   return (
     <>
-      <div className="neuron-container">
+      <div className="supply_container">
         <NeuronDND imgPath={props.imgPath} type={props.type} />
-        <p className="title">{props.title}</p>
+        <p className="supply_title">{props.title}</p>
       </div>
     </>
   );
