@@ -1,33 +1,18 @@
-import Board from "./components/Board";
-import Dock from "./components/Dock";
-import Header from "./components/Header";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import HelpSidebar from "./components/HelpSidebar";
-import { useState } from "react";
-import HelpButton from "./components/HelpButton";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
-function App() {
-  const [isHelpActive, setIsHelpActive] = useState(false);
-
+const App = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Header>
-        <HelpButton
-          isHelpActive={isHelpActive}
-          onClick={() => setIsHelpActive(!isHelpActive)}
-        />
-      </Header>
-
-      <HelpSidebar isHelpActive={isHelpActive} />
-
-      <div>
-        <Board rows={8} cols={8} />
-      </div>
-
-      <Dock />
-    </DndProvider>
+    <>
+      <Router>
+        <Routes>
+          <Route index path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+        </Routes>
+      </Router>
+    </>
   );
-}
+};
 
 export default App;

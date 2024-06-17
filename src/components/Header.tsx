@@ -9,10 +9,7 @@ function Header(props: HeaderProps) {
     <>
       <header className="header">
         <p className="logo">NeuroCircuit</p>
-        <nav className="navbar">
-          {props.children}
-          <div>About</div>
-        </nav>
+        <nav className="navbar">{props.children}</nav>
       </header>
     </>
   );
