@@ -1,5 +1,6 @@
 import "./Neuron.css";
 import { Neurons } from "./Neurons";
+import { motion } from "framer-motion";
 
 interface NeuronProps {
   imgPath: string;
@@ -9,9 +10,9 @@ interface NeuronProps {
 export const Neuron = (props: NeuronProps) => {
   return (
     <>
-      <div className="neuron">
+      <motion.div className="neuron" whileHover={{ scale: 1.1 }}>
         <img src={props.imgPath} />
-      </div>
+      </motion.div>
     </>
   );
 };
