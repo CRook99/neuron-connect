@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import "./About.css";
 
 const About = () => {
   return (
     <>
       <Header>
         <Link to="/">
-          <div>
-            <FontAwesomeIcon icon={faXmark} />
+          <div className="x_icon_div">
+            <FontAwesomeIcon icon={faXmark} className="x_icon" />
           </div>
         </Link>
       </Header>
