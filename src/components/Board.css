@@ -1,4 +1,5 @@
 .board-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,8 +10,18 @@
 
 .board {
   width: auto;
+  position: relative;
 
   user-select: none;
+}
+
+.axons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
 
 .row {

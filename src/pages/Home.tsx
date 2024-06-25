@@ -7,25 +7,9 @@ import Header from "../components/Header";
 import HelpButton from "../components/HelpButton";
 import HelpSidebar from "../components/HelpSidebar";
 import { Link, generatePath } from "react-router-dom";
-import Axon from "../components/Axon";
-import { Point } from "../utils/types";
-
-interface AxonPath {
-  path: Point[];
-}
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
-
-  const [axons, setAxons] = useState<AxonPath[]>([
-    {
-      path: [
-        { row: 1, col: 1 },
-        { row: 3, col: 1 },
-        { row: 3, col: 4 },
-      ],
-    },
-  ]);
 
   // const addAxon = (start: Point, end: Point) => {
   //   const newPath: Point[] = generatePath(start, end);
@@ -46,12 +30,8 @@ const Home = () => {
 
       <HelpSidebar isHelpActive={isHelpActive} />
 
-      {axons.map((axon, index) => (
-        <Axon key={index} path={axon.path} />
-      ))}
-
       <div>
-        <Board rows={8} cols={8} />
+        <Board rows={8} cols={12} />
       </div>
 
       <Dock />

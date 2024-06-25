@@ -1,9 +1,16 @@
 import Slot from "./Slot";
 import "./Board.css";
+import { useState } from "react";
+import { Point } from "../utils/types";
+import Axon from "./Axon";
 
 interface BoardProps {
   rows: number;
   cols: number;
+}
+
+interface AxonPath {
+  path: Point[];
 }
 
 const Board = (props: BoardProps) => {
@@ -21,10 +28,27 @@ const Board = (props: BoardProps) => {
     );
   }
 
+  const [axons, setAxons] = useState<AxonPath[]>([
+    {
+      path: [
+        { row: 1, col: 1 },
+        { row: 3, col: 1 },
+        { row: 3, col: 4 },
+      ],
+    },
+  ]);
+
   return (
     <>
       <div className="board-container">
-        <div className="board">{board}</div>
+        <div className="board">
+          {board}
+          <div className="axons">
+            {axons.map((axon, index) => (
+              <Axon key={index} path={axon.path} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
