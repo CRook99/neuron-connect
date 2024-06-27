@@ -19,7 +19,7 @@ const Board = (props: BoardProps) => {
   for (let i = 0; i < props.rows; i++) {
     const row = [];
     for (let j = 0; j < props.cols; j++) {
-      row.push(<Slot key={`r${i}c${j}`} />);
+      row.push(<Slot key={`r${i}c${j}`} row={i} col={j} />);
     }
     board.push(
       <div className="row" key={i}>

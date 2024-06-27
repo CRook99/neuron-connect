@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 interface NeuronProps {
   imgPath: string;
   neuronType: Neurons;
+  row: number;
+  col: number;
 }
 
 export const Neuron = (props: NeuronProps) => {

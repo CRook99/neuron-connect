@@ -6,7 +6,12 @@ import ExcitatoryNeuron from "./ExcitatoryNeuron";
 import InhibitoryNeuron from "./InhibitoryNeuron";
 import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
 
-const Slot = () => {
+interface SlotProps {
+  row: number;
+  col: number;
+}
+
+const Slot = (props: SlotProps) => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
 
   const addNeuron = (type: Neurons) => {
