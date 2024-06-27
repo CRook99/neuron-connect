@@ -1,12 +1,12 @@
 import { createContext, useContext } from "react";
-import { Point } from "../utils/types";
+import { Coordinate } from "../utils/types";
 
 export interface DragContextType {
-  dragStart: Point | null;
+  dragStart: Coordinate | null;
   //slots: { point: Point }[];
-  axons: { path: Point[] }[];
-  handleDragStart: (point: Point) => void;
-  handleDragEnd: (point: Point) => void;
+  axons: { path: Coordinate[] }[];
+  handleDragStart: (point: Coordinate) => void;
+  handleDragEnd: (point: Coordinate) => void;
 }
 
 export const DragContext = createContext<DragContextType | undefined>(undefined);

@@ -2,27 +2,19 @@ import { useState } from "react";
 import "./Slot.css";
 import { useDrop } from "react-dnd";
 import { Neurons } from "./Neurons";
-import ExcitatoryNeuron from "./ExcitatoryNeuron";
-import InhibitoryNeuron from "./InhibitoryNeuron";
 import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
+import { Coordinate } from "../utils/types";
+import Neuron from "./Neuron";
 
 interface SlotProps {
-  row: number;
-  col: number;
+  coord: Coordinate;
 }
 
 const Slot = (props: SlotProps) => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
 
   const addNeuron = (type: Neurons) => {
-    switch (type) {
-      case Neurons.Excitatory:
-        setNeuron(<ExcitatoryNeuron />);
-        return;
-      case Neurons.Inhibitory:
-        setNeuron(<InhibitoryNeuron />);
-        return;
-    }
+    setNeuron(<Neuron neuronType={type} coord={props.coord} />);
   };
 
   const [{ isOver }, drop] = useDrop({

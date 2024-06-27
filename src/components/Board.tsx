@@ -1,7 +1,7 @@
 import Slot from "./Slot";
 import "./Board.css";
 import { useState } from "react";
-import { Point } from "../utils/types";
+import { Coordinate } from "../utils/types";
 import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
 import { generateAxonPath } from "../utils/generateAxonPath";
@@ -12,7 +12,7 @@ interface BoardProps {
 }
 
 interface AxonPath {
-  path: Point[];
+  path: Coordinate[];
 }
 
 const Board = (props: BoardProps) => {
@@ -22,7 +22,7 @@ const Board = (props: BoardProps) => {
   for (let i = 0; i < props.rows; i++) {
     const row = [];
     for (let j = 0; j < props.cols; j++) {
-      row.push(<Slot key={`r${i}c${j}`} row={i} col={j} />);
+      row.push(<Slot key={`r${i}c${j}`} coord={{ row: i, col: j }} />);
     }
     board.push(
       <div className="row" key={i}>
@@ -31,32 +31,20 @@ const Board = (props: BoardProps) => {
     );
   }
 
-  const [axons, setAxons] = useState<AxonPath[]>([
-    {
-      path: [
-        { row: 1, col: 1 },
-        { row: 3, col: 1 },
-        { row: 3, col: 4 },
-      ],
-    },
-  ]);
+  const [axons, setAxons] = useState<AxonPath[]>([]);
 
-  const [dragStart, setDragStart] = useState<Point | null>(null);
-  const handleDragStart = (point: Point) => {
-    setDragStart(point);
+  const [dragStart, setDragStart] = useState<Coordinate | null>(null);
+  const handleDragStart = (coord: Coordinate) => {
+    setDragStart(coord);
     console.log("Drag start");
   };
 
-  const handleDragEnd = (point: Point) => {
+  const handleDragEnd = (coord: Coordinate) => {
     if (dragStart) {
-      // Add neuron check
-
-      const newPath: Point[] = generateAxonPath(dragStart, point);
+      const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
       setAxons([...axons, { path: newPath }]);
       setDragStart(null);
       console.log("Drag end");
-    } else {
-      console.log("FUCK!");
     }
   };
 

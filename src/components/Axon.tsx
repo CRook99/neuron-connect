@@ -1,10 +1,10 @@
 //import { useState } from "react";
 import "./Axon.css";
-import { Point } from "../utils/types";
+import { Coordinate } from "../utils/types";
 import { TOTAL_SLOT_SIZE } from "../utils/constants";
 
 interface AxonProps {
-  path: Point[];
+  path: Coordinate[];
 }
 
 const Axon: React.FC<AxonProps> = ({ path }) => {
@@ -25,7 +25,7 @@ const Axon: React.FC<AxonProps> = ({ path }) => {
             (path[index + 1]?.row || segment.row) * TOTAL_SLOT_SIZE +
             0.5 * TOTAL_SLOT_SIZE
           }
-          stroke="aqua"
+          stroke="grey"
           strokeLinecap="round"
           strokeWidth="5"
         />

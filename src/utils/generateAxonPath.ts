@@ -1,7 +1,7 @@
-import { Point } from "./types";
+import { Coordinate } from "./types";
 
-export const generateAxonPath = (start: Point, end: Point): Point[] => {
-  const genPath: Point[] = [];
+export const generateAxonPath = (start: Coordinate, end: Coordinate): Coordinate[] => {
+  const genPath: Coordinate[] = [];
 
   let { row: currentRow, col: currentCol } = start;
 

@@ -1,26 +1,31 @@
-import { useContext } from "react";
 import "./Neuron.css";
 import { Neurons } from "./Neurons";
 import { motion } from "framer-motion";
-import { DragContext, useDragContext } from "../contexts/DragContext";
-import { Point } from "../utils/types";
+import { useDragContext } from "../contexts/DragContext";
+import { Coordinate } from "../utils/types";
 
 interface NeuronProps {
-  imgPath: string;
   neuronType: Neurons;
-  point: Point;
+  coord: Coordinate;
 }
+
+const imageMap = {
+  [Neurons.Excitatory]: "./NeuronA.png",
+  [Neurons.Inhibitory]: "./NeuronB.png",
+};
 
 export const Neuron = (props: NeuronProps) => {
   const { handleDragStart, handleDragEnd } = useDragContext();
 
   const handleMouseDown = () => {
-    handleDragStart(props.point);
+    handleDragStart(props.coord);
   };
 
   const handleMouseUp = () => {
-    handleDragEnd(props.point);
+    handleDragEnd(props.coord);
   };
+
+  const imageSrc = imageMap[props.neuronType];
 
   return (
     <>
@@ -30,7 +35,7 @@ export const Neuron = (props: NeuronProps) => {
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
-        <img src={props.imgPath} />
+        <img src={imageSrc} />
       </motion.div>
     </>
   );
