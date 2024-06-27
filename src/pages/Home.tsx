@@ -6,15 +6,10 @@ import Dock from "../components/Dock";
 import Header from "../components/Header";
 import HelpButton from "../components/HelpButton";
 import HelpSidebar from "../components/HelpSidebar";
-import { Link, generatePath } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
-
-  // const addAxon = (start: Point, end: Point) => {
-  //   const newPath: Point[] = generatePath(start, end);
-  //   setAxons([...axons, { path: newPath }]);
-  // };
 
   return (
     <DndProvider backend={HTML5Backend}>

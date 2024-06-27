@@ -1,4 +1,4 @@
-import { useState } from "react";
+//import { useState } from "react";
 import "./Axon.css";
 import { Point } from "../utils/types";
 import { TOTAL_SLOT_SIZE } from "../utils/constants";
@@ -8,7 +8,7 @@ interface AxonProps {
 }
 
 const Axon: React.FC<AxonProps> = ({ path }) => {
-  const [signalPosition, setSignalPosition] = useState<number>(0);
+  //const [signalPosition, setSignalPosition] = useState<number>(0);
 
   return (
     <svg className="axon">
