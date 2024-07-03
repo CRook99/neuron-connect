@@ -1,9 +1,14 @@
 import { Coordinate } from "./types";
 
-export const generateAxonPath = (start: Coordinate, end: Coordinate): Coordinate[] => {
+export const generateAxonPath = (start: Coordinate, end: Coordinate, startExtension: Coordinate = { row: -1, col: -1 }): Coordinate[] => {
   const genPath: Coordinate[] = [];
 
-  let { row: currentRow, col: currentCol } = start;
+  genPath.push(start);
+  if (startExtension.row !== -1 && startExtension.col !== -1) {
+    genPath.push(startExtension);
+  }
+
+  let { row: currentRow, col: currentCol } = genPath[genPath.length - 1];
 
   while (currentCol !== end.col) {
     genPath.push({ row: currentRow, col: currentCol });

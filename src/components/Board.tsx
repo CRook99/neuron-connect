@@ -32,19 +32,20 @@ const Board = (props: BoardProps) => {
   }
 
   const [axons, setAxons] = useState<AxonPath[]>([]);
-
+  const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<Coordinate | null>(null);
+
   const handleDragStart = (coord: Coordinate) => {
     setDragStart(coord);
-    console.log("Drag start");
+    setIsDragging(true);
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (dragStart) {
+    if (isDragging && dragStart) {
       const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
       setAxons([...axons, { path: newPath }]);
       setDragStart(null);
-      console.log("Drag end");
+      setIsDragging(false);
     }
   };
 

@@ -1,3 +1,15 @@
+.neuron-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: -20px;
+  padding: 20px;
+  pointer-events: auto;
+}
+
 .neuron {
   display: flex;
   justify-content: center;
@@ -12,4 +24,37 @@
 
   user-select: none;
   pointer-events: none;
+}
+
+.icons-container {
+  position: absolute;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.icon {
+  position: absolute;
+  font-size: 24px;
+  pointer-events: all;
+}
+
+.top {
+  top: -10px;
+}
+
+.bottom {
+  bottom: -10px;
+}
+
+.left {
+  left: -10px;
+}
+
+.right {
+  right: -10px;
 }

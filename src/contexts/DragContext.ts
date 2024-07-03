@@ -3,7 +3,6 @@ import { Coordinate } from "../utils/types";
 
 export interface DragContextType {
   dragStart: Coordinate | null;
-  //slots: { point: Point }[];
   axons: { path: Coordinate[] }[];
   handleDragStart: (point: Coordinate) => void;
   handleDragEnd: (point: Coordinate) => void;
