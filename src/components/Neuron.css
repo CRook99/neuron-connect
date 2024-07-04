@@ -43,11 +43,11 @@
   pointer-events: all;
 }
 
-.top {
+.up {
   top: -10px;
 }
 
-.bottom {
+.down {
   bottom: -10px;
 }
 

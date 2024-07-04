@@ -1,7 +1,7 @@
 import "./Neuron.css";
 
 import { Neurons } from "./Neurons";
-import { Coordinate } from "../utils/types";
+import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
 import { useState } from "react";
@@ -26,32 +26,32 @@ const imageMap = {
 };
 
 const icons = [
-  { icon: faCircleUp, className: "top" },
-  { icon: faCircleDown, className: "bottom" },
-  { icon: faCircleLeft, className: "left" },
-  { icon: faCircleRight, className: "right" },
+  { icon: faCircleUp, direction: Direction.UP },
+  { icon: faCircleDown, direction: Direction.DOWN },
+  { icon: faCircleLeft, direction: Direction.LEFT },
+  { icon: faCircleRight, direction: Direction.RIGHT },
 ];
 
 export const Neuron = (props: NeuronProps) => {
   const { handleDragStart, handleDragEnd } = useDragContext();
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseDown = (direction: string) => {
+  const handleMouseDown = (direction: Direction) => {
     let extension = () => {
       switch (direction) {
-        case "top":
+        case Direction.UP:
           return { row: props.coord.row - 1, col: props.coord.col };
-        case "bottom":
+        case Direction.DOWN:
           return { row: props.coord.row + 1, col: props.coord.col };
-        case "left":
+        case Direction.LEFT:
           return { row: props.coord.row, col: props.coord.col - 1 };
-        case "right":
+        case Direction.RIGHT:
           return { row: props.coord.row, col: props.coord.col + 1 };
         default:
           return null;
       }
     };
-    handleDragStart(props.coord);
+    handleDragStart(props.coord, direction);
     console.log("dragstart");
   };
 
@@ -83,16 +83,18 @@ export const Neuron = (props: NeuronProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {icons.map(({ icon, className }, index) =>
-                (className === "top" && props.coord.row == 0) ||
-                (className === "bottom" && props.coord.row == 7) ||
-                (className === "left" && props.coord.col == 0) ||
-                (className === "right" && props.coord.col == 11) ? null : (
+              {/* TODO change hard coded values */}
+              {icons.map(({ icon, direction }, index) =>
+                (direction === Direction.UP && props.coord.row == 0) ||
+                (direction === Direction.DOWN && props.coord.row == 7) ||
+                (direction === Direction.LEFT && props.coord.col == 0) ||
+                (direction === Direction.RIGHT &&
+                  props.coord.col == 11) ? null : (
                   <motion.div
                     key={index}
-                    className={`icon ${className}`}
+                    className={`icon ${direction}`}
                     whileHover={{ scale: 1.2 }}
-                    onMouseDown={() => handleMouseDown(className)}
+                    onMouseDown={() => handleMouseDown(direction)}
                   >
                     <FontAwesomeIcon icon={icon} />
                   </motion.div>

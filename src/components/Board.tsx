@@ -1,7 +1,7 @@
 import Slot from "./Slot";
 import "./Board.css";
 import { useState } from "react";
-import { Coordinate } from "../utils/types";
+import { Coordinate, Direction } from "../utils/types";
 import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
 import { generateAxonPath } from "../utils/generateAxonPath";
@@ -35,7 +35,7 @@ const Board = (props: BoardProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<Coordinate | null>(null);
 
-  const handleDragStart = (coord: Coordinate) => {
+  const handleDragStart = (coord: Coordinate, direction: Direction) => {
     setDragStart(coord);
     setIsDragging(true);
   };
@@ -52,7 +52,13 @@ const Board = (props: BoardProps) => {
   return (
     <>
       <DragContext.Provider
-        value={{ dragStart, axons, handleDragStart, handleDragEnd }}
+        value={{
+          dragStart,
+          axons,
+          temporaryAxon: [],
+          handleDragStart,
+          handleDragEnd,
+        }}
       >
         <div className="board-container">
           <div className="board">
