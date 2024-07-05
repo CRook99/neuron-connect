@@ -33,7 +33,7 @@ const icons = [
 ];
 
 export const Neuron = (props: NeuronProps) => {
-  const { handleDragStart, handleDragEnd } = useDragContext();
+  const { dragStart, handleDragStart, handleDragEnd } = useDragContext();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseDown = (direction: Direction) => {
@@ -75,7 +75,7 @@ export const Neuron = (props: NeuronProps) => {
           <img src={imageSrc} />
         </motion.div>
         <AnimatePresence>
-          {isHovered && (
+          {isHovered && !dragStart && (
             <motion.div
               className="icons-container"
               initial={{ opacity: 0 }}

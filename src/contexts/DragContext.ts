@@ -5,6 +5,7 @@ export interface DragContextType {
   dragStart: Coordinate | null;
   axons: { path: Coordinate[] }[];
   temporaryAxon: Coordinate[];
+  handleNewHover: (point: Coordinate, onNeuron: boolean) => void;
   handleDragStart: (point: Coordinate, outDirection: Direction) => void;
   handleDragEnd: (point: Coordinate) => void;
 }

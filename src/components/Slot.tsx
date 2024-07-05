@@ -5,6 +5,7 @@ import { Neurons } from "./Neurons";
 import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
 import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";
+import { useDragContext } from "../contexts/DragContext";
 
 interface SlotProps {
   coord: Coordinate;
@@ -12,6 +13,8 @@ interface SlotProps {
 
 const Slot = (props: SlotProps) => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
+
+  const { handleNewHover } = useDragContext();
 
   const addNeuron = (type: Neurons) => {
     setNeuron(<Neuron neuronType={type} coord={props.coord} />);
@@ -35,7 +38,12 @@ const Slot = (props: SlotProps) => {
 
   return (
     <>
-      <div className="slot" ref={drop} style={style}>
+      <div
+        className="slot"
+        ref={drop}
+        style={style}
+        onMouseEnter={() => handleNewHover(props.coord, neuron ? true : false)}
+      >
         {neuron ? <>{neuron}</> : <img className="peg" src="./Peg.png" />}
       </div>
     </>

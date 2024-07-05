@@ -1,6 +1,6 @@
 import Slot from "./Slot";
 import "./Board.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Coordinate, Direction } from "../utils/types";
 import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
@@ -32,8 +32,18 @@ const Board = (props: BoardProps) => {
   }
 
   const [axons, setAxons] = useState<AxonPath[]>([]);
+  const [tempAxon, setTempAxon] = useState<AxonPath>({ path: [] });
+  const [onNeuron, setOnNeuron] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<Coordinate | null>(null);
+
+  const handleNewHover = (coord: Coordinate, isOnNeuron: boolean) => {
+    if (isDragging && dragStart) {
+      const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
+      setTempAxon({ path: newPath });
+      setOnNeuron(isOnNeuron);
+    }
+  };
 
   const handleDragStart = (coord: Coordinate, direction: Direction) => {
     setDragStart(coord);
@@ -41,13 +51,31 @@ const Board = (props: BoardProps) => {
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (isDragging && dragStart) {
+    if (!isDragging || !dragStart) return;
+
+    if (onNeuron) {
       const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
       setAxons([...axons, { path: newPath }]);
-      setDragStart(null);
-      setIsDragging(false);
     }
+
+    // Reset dragging context
+    setTempAxon({ path: [] });
+    setDragStart(null);
+    setIsDragging(false);
   };
+
+  // MouseUp listener to handle failed axon draws
+  useEffect(() => {
+    const handleMouseUp = () => {
+      handleDragEnd({ row: -1, col: -1 });
+    };
+
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  });
 
   return (
     <>
@@ -56,6 +84,7 @@ const Board = (props: BoardProps) => {
           dragStart,
           axons,
           temporaryAxon: [],
+          handleNewHover,
           handleDragStart,
           handleDragEnd,
         }}
@@ -67,6 +96,7 @@ const Board = (props: BoardProps) => {
               {axons.map((axon, index) => (
                 <Axon key={index} path={axon.path} />
               ))}
+              <Axon path={tempAxon.path} />
             </div>
           </div>
         </div>
