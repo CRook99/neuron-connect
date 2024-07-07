@@ -5,14 +5,11 @@ import { Coordinate, Direction } from "../utils/types";
 import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
 import { generateAxonPath } from "../utils/generateAxonPath";
+import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
 
 interface BoardProps {
   rows: number;
   cols: number;
-}
-
-interface AxonPath {
-  path: Coordinate[];
 }
 
 const Board = (props: BoardProps) => {
@@ -31,36 +28,42 @@ const Board = (props: BoardProps) => {
     );
   }
 
-  const [axons, setAxons] = useState<AxonPath[]>([]);
-  const [tempAxon, setTempAxon] = useState<AxonPath>({ path: [] });
+  const [startNeuron, setStartNeuron] = useState<Coordinate | null>(null);
+  const [pathStart, setPathStart] = useState<Coordinate | null>(null);
+  const [outDirection, setOutDirection] = useState<Direction>(Direction.null);
+  const [axons, setAxons] = useState<Coordinate[][]>([]);
+  const [tempAxon, setTempAxon] = useState<Coordinate[]>([]);
   const [onNeuron, setOnNeuron] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState<Coordinate | null>(null);
 
   const handleNewHover = (coord: Coordinate, isOnNeuron: boolean) => {
-    if (isDragging && dragStart) {
-      const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
-      setTempAxon({ path: newPath });
+    if (isDragging && pathStart) {
+      const newPath: Coordinate[] = generateAxonPath(pathStart, coord);
+      setTempAxon(newPath);
       setOnNeuron(isOnNeuron);
     }
   };
 
   const handleDragStart = (coord: Coordinate, direction: Direction) => {
-    setDragStart(coord);
+    setStartNeuron(coord);
+    setPathStart(augmentCoordWithDir(coord, direction));
+    setOutDirection(direction);
     setIsDragging(true);
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (!isDragging || !dragStart) return;
+    if (!isDragging || !pathStart) return;
 
     if (onNeuron) {
-      const newPath: Coordinate[] = generateAxonPath(dragStart, coord);
-      setAxons([...axons, { path: newPath }]);
+      const newPath: Coordinate[] = generateAxonPath(pathStart, coord);
+      setAxons([...axons, newPath]);
     }
 
     // Reset dragging context
-    setTempAxon({ path: [] });
-    setDragStart(null);
+    setStartNeuron(null);
+    setPathStart(null);
+    setOutDirection(Direction.null);
+    setTempAxon([]);
     setIsDragging(false);
   };
 
@@ -81,7 +84,9 @@ const Board = (props: BoardProps) => {
     <>
       <DragContext.Provider
         value={{
-          dragStart,
+          startNeuron,
+          pathStart,
+          outDirection,
           axons,
           temporaryAxon: [],
           handleNewHover,
@@ -94,9 +99,9 @@ const Board = (props: BoardProps) => {
             {board}
             <div className="axons">
               {axons.map((axon, index) => (
-                <Axon key={index} path={axon.path} />
+                <Axon key={index} path={axon} />
               ))}
-              <Axon path={tempAxon.path} />
+              <Axon path={tempAxon} />
             </div>
           </div>
         </div>

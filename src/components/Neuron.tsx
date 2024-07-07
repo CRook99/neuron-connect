@@ -33,24 +33,10 @@ const icons = [
 ];
 
 export const Neuron = (props: NeuronProps) => {
-  const { dragStart, handleDragStart, handleDragEnd } = useDragContext();
+  const { pathStart, handleDragStart, handleDragEnd } = useDragContext();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseDown = (direction: Direction) => {
-    let extension = () => {
-      switch (direction) {
-        case Direction.UP:
-          return { row: props.coord.row - 1, col: props.coord.col };
-        case Direction.DOWN:
-          return { row: props.coord.row + 1, col: props.coord.col };
-        case Direction.LEFT:
-          return { row: props.coord.row, col: props.coord.col - 1 };
-        case Direction.RIGHT:
-          return { row: props.coord.row, col: props.coord.col + 1 };
-        default:
-          return null;
-      }
-    };
     handleDragStart(props.coord, direction);
     console.log("dragstart");
   };
@@ -75,7 +61,7 @@ export const Neuron = (props: NeuronProps) => {
           <img src={imageSrc} />
         </motion.div>
         <AnimatePresence>
-          {isHovered && !dragStart && (
+          {isHovered && !pathStart && (
             <motion.div
               className="icons-container"
               initial={{ opacity: 0 }}

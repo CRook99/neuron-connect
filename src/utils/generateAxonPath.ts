@@ -1,12 +1,9 @@
-import { Coordinate } from "./types";
+import { Coordinate, Direction } from "./types";
 
-export const generateAxonPath = (start: Coordinate, end: Coordinate, startExtension: Coordinate = { row: -1, col: -1 }): Coordinate[] => {
+export const generateAxonPath = (start: Coordinate, end: Coordinate, direction: Direction = Direction.UP): Coordinate[] => {
   const genPath: Coordinate[] = [];
 
   genPath.push(start);
-  if (startExtension.row !== -1 && startExtension.col !== -1) {
-    genPath.push(startExtension);
-  }
 
   let { row: currentRow, col: currentCol } = genPath[genPath.length - 1];
 
