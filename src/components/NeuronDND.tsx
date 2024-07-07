@@ -9,7 +9,7 @@ interface NeuronDNDProps {
 }
 
 const NeuronDND = (props: NeuronDNDProps) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [, drag] = useDrag(() => ({
     type: "neuron",
     item: { props },
     collect: (monitor) => ({
