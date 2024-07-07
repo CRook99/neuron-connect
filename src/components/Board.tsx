@@ -37,27 +37,35 @@ const Board = (props: BoardProps) => {
   const [onNeuron, setOnNeuron] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState(false);
 
+  const graph = useGraphContext();
+
   const handleNewHover = (coord: Coordinate, isOnNeuron: boolean) => {
-    if (isDragging && pathStart) {
-      const newPath: Coordinate[] = generateAxonPath(pathStart, coord);
-      setTempAxon(newPath);
-      setOnNeuron(isOnNeuron);
+    if (isDragging && startNeuron) {
+      const newPath: Coordinate[] | null = graph.bfs(startNeuron, coord);
+      if (newPath) {
+        setTempAxon(newPath);
+        setOnNeuron(isOnNeuron);
+      } else {
+        setTempAxon([]);
+      }
     }
   };
 
   const handleDragStart = (coord: Coordinate, direction: Direction) => {
     setStartNeuron(coord);
-    setPathStart(augmentCoordWithDir(coord, direction));
     setOutDirection(direction);
     setIsDragging(true);
+    console.log("handledragstart");
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (!isDragging || !pathStart) return;
+    if (!isDragging || !startNeuron) return;
 
     if (onNeuron) {
-      const newPath: Coordinate[] = generateAxonPath(pathStart, coord);
-      setAxons([...axons, newPath]);
+      const newPath: Coordinate[] | null = graph.bfs(startNeuron, coord);
+      if (newPath) {
+        setAxons([...axons, newPath]);
+      }
     }
 
     // Reset dragging context
@@ -80,8 +88,6 @@ const Board = (props: BoardProps) => {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   });
-
-  const graph = useGraphContext();
 
   return (
     <>

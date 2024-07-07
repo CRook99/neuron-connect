@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import HelpButton from "../components/HelpButton";
 import HelpSidebar from "../components/HelpSidebar";
 import { Link } from "react-router-dom";
+import { NUM_COLS, NUM_ROWS } from "../utils/constants";
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
@@ -26,7 +27,7 @@ const Home = () => {
       <HelpSidebar isHelpActive={isHelpActive} />
 
       <div>
-        <Board rows={8} cols={12} />
+        <Board rows={NUM_ROWS} cols={NUM_COLS} />
       </div>
 
       <Dock />
