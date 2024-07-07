@@ -27,7 +27,7 @@ const Slot = (props: SlotProps) => {
     accept: "neuron",
     drop: (item: any) => {
       addNeuron(item.props.type);
-      graph.setOccupancy(props.coord);
+      graph.setOccupancy(props.coord, "Neuron");
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

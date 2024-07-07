@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Coordinate, Direction } from "../utils/types";
 import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
-import { generateAxonPath } from "../utils/generateAxonPath";
 import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
 import { GraphProvider, useGraphContext } from "../contexts/GraphContext";
 
@@ -41,7 +40,11 @@ const Board = (props: BoardProps) => {
 
   const handleNewHover = (coord: Coordinate, isOnNeuron: boolean) => {
     if (isDragging && pathStart) {
-      const newPath: Coordinate[] | null = graph.bfs(pathStart, coord);
+      const newPath: Coordinate[] | null = graph.bfs(
+        pathStart,
+        coord,
+        outDirection
+      );
       if (newPath) {
         newPath.unshift(startNeuron!);
         setTempAxon(newPath);
@@ -63,13 +66,17 @@ const Board = (props: BoardProps) => {
     if (!isDragging || !pathStart) return;
 
     if (onNeuron) {
-      const newPath: Coordinate[] | null = graph.bfs(pathStart, coord);
+      const newPath: Coordinate[] | null = graph.bfs(
+        pathStart,
+        coord,
+        outDirection
+      );
       if (newPath) {
         console.log("Axon created");
         newPath.unshift(startNeuron!);
         setAxons([...axons, newPath]);
         for (let c of newPath) {
-          graph.setOccupancy(c);
+          graph.setOccupancy(c, "Axon");
         }
       }
     }

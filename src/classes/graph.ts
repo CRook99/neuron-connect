@@ -1,18 +1,20 @@
-import { Coordinate } from "../utils/types";
+import { Coordinate, Direction } from "../utils/types";
 
 type Node = Coordinate & { id: string };
+
+export type Occupant = "Neuron" | "Axon";
 
 export class Graph {
     rows: number;
     cols: number;
     adjacencyList: Map<string, Node[]>;
-    occupied: Set<string>;
+    occupied: Map<string, Occupant>;
 
     constructor(rows: number, cols: number) {
         this.rows = rows;
         this.cols = cols;
         this.adjacencyList = new Map();
-        this.occupied = new Set();
+        this.occupied = new Map();
         this.createGrid();
     }
 
@@ -35,11 +37,10 @@ export class Graph {
         this.adjacencyList.get(b.id)?.push(a);
     }
 
-    setOccupancy(coord: Coordinate) {
+    setOccupancy(coord: Coordinate, occupant: Occupant) {
         const id = this.createNodeId(coord);
         if (!this.adjacencyList.has(id)) return;
-        console.log(`Occupying ${coord.x}_${coord.y}`);
-        this.occupied.add(id);
+        this.occupied.set(id, occupant);
     }
 
     removeOccupancy(coord: Coordinate) {
@@ -67,27 +68,32 @@ export class Graph {
         }
     }
 
-    bfs(start: Coordinate, end: Coordinate): Coordinate[] | null {
+    bfs(start: Coordinate, end: Coordinate, initialDir: Direction): Coordinate[] | null {
         const startNode: Node = this.createNodeFromCoord(start);
         const endNode: Node = this.createNodeFromCoord(end);
         const visited: Set<string> = new Set();
-        const parent: Map<string, Node> = new Map();
-        const queue: Node[] = [startNode];
+        const parent: Map<string, { node: Node, direction: Direction }> = new Map();
+        const queue: { node: Node, direction: Direction }[] = [{node: startNode, direction: initialDir}];
 
         visited.add(startNode.id);
 
         while (queue.length > 0) {
-            const node = queue.shift()!;
+            const { node, direction } = queue.shift()!;
             if (node.id === endNode.id) {
                 return this.constructPath(parent, startNode, endNode);
             }
 
-
             for (const neighbour of this.adjacencyList.get(node.id) || []) {
-                if (!visited.has(neighbour.id) && !this.occupied.has(neighbour.id)) {
+                const neighbourDir = this.getDirection(node, neighbour);
+                if (!visited.has(neighbour.id)) {
                     visited.add(neighbour.id);
-                    parent.set(neighbour.id, node);
-                    queue.push(neighbour);
+                    parent.set(neighbour.id, { node, direction: neighbourDir });
+                    
+                    if (neighbourDir === direction) {
+                        queue.unshift({node: neighbour, direction: neighbourDir}); // Priority given to similar direction
+                    } else {
+                        queue.push({node: neighbour, direction: neighbourDir});
+                    }
                 }
             }
         }
@@ -95,16 +101,25 @@ export class Graph {
         return null;
     }
 
-    constructPath(parents: Map<string, Node>, start: Node, end: Node): Coordinate[] {
+    constructPath(parents: Map<string, { node: Node, direction: Direction }>, start: Node, end: Node): Coordinate[] {
         const path: Coordinate[] = [end];
-
-        let node = end;
-        while (node.id !== start.id) {
-            node = parents.get(node.id)!;
+        console.log('cons');
+        let nodeId = end.id;
+        while (nodeId !== start.id) {
+            const { node } = parents.get(nodeId)!;
             path.unshift(node);
+            nodeId = node.id;
         }
-
+        console.log('doen consruct');
         return path;
+    }
+
+    getDirection(from: Node, to: Node): Direction {
+        if (to.x < from.x) return Direction.UP;
+        if (to.x > from.x) return Direction.DOWN;
+        if (to.y < from.y) return Direction.LEFT;
+        if (to.y > from.y) return Direction.RIGHT;
+        throw new Error('getDirection non-adjacent');
     }
 
     printGraph() {
