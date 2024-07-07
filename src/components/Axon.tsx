@@ -15,14 +15,14 @@ const Axon: React.FC<AxonProps> = ({ path }) => {
       {path.map((segment, index) => (
         <line
           key={index}
-          x1={segment.col * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE}
-          y1={segment.row * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE}
+          x1={segment.y * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE}
+          y1={segment.x * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE}
           x2={
-            (path[index + 1]?.col || segment.col) * TOTAL_SLOT_SIZE +
+            (path[index + 1]?.y || segment.y) * TOTAL_SLOT_SIZE +
             0.5 * TOTAL_SLOT_SIZE
           }
           y2={
-            (path[index + 1]?.row || segment.row) * TOTAL_SLOT_SIZE +
+            (path[index + 1]?.x || segment.x) * TOTAL_SLOT_SIZE +
             0.5 * TOTAL_SLOT_SIZE
           }
           stroke="grey"

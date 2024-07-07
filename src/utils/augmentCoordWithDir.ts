@@ -4,13 +4,13 @@ export const augmentCoordWithDir = (coord: Coordinate, direction: Direction) => 
   let out = (() => {
     switch (direction) {
       case Direction.UP:
-          return { row: coord.row - 1, col: coord.col };
+          return { row: coord.x - 1, col: coord.y };
         case Direction.DOWN:
-          return { row: coord.row + 1, col: coord.col };
+          return { row: coord.x + 1, col: coord.y };
         case Direction.LEFT:
-          return { row: coord.row, col: coord.col - 1 };
+          return { row: coord.x, col: coord.y - 1 };
         case Direction.RIGHT:
-          return { row: coord.row, col: coord.col + 1 };
+          return { row: coord.x, col: coord.y + 1 };
         default:
           return null;
     }

@@ -6,6 +6,7 @@ import Axon from "./Axon";
 import { DragContext } from "../contexts/DragContext";
 import { generateAxonPath } from "../utils/generateAxonPath";
 import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
+import { GraphProvider, useGraphContext } from "../contexts/GraphContext";
 
 interface BoardProps {
   rows: number;
@@ -19,7 +20,7 @@ const Board = (props: BoardProps) => {
   for (let i = 0; i < props.rows; i++) {
     const row = [];
     for (let j = 0; j < props.cols; j++) {
-      row.push(<Slot key={`r${i}c${j}`} coord={{ row: i, col: j }} />);
+      row.push(<Slot key={`r${i}c${j}`} coord={{ x: i, y: j }} />);
     }
     board.push(
       <div className="row" key={i}>
@@ -70,7 +71,7 @@ const Board = (props: BoardProps) => {
   // MouseUp listener to handle failed axon draws
   useEffect(() => {
     const handleMouseUp = () => {
-      handleDragEnd({ row: -1, col: -1 });
+      handleDragEnd({ x: -1, y: -1 });
     };
 
     document.addEventListener("mouseup", handleMouseUp);
@@ -79,6 +80,8 @@ const Board = (props: BoardProps) => {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   });
+
+  const graph = useGraphContext();
 
   return (
     <>
@@ -94,17 +97,19 @@ const Board = (props: BoardProps) => {
           handleDragEnd,
         }}
       >
-        <div className="board-container">
-          <div className="board">
-            {board}
-            <div className="axons">
-              {axons.map((axon, index) => (
-                <Axon key={index} path={axon} />
-              ))}
-              <Axon path={tempAxon} />
+        <GraphProvider rows={props.rows} cols={props.cols}>
+          <div className="board-container">
+            <div className="board">
+              {board}
+              <div className="axons">
+                {axons.map((axon, index) => (
+                  <Axon key={index} path={axon} />
+                ))}
+                <Axon path={tempAxon} />
+              </div>
             </div>
           </div>
-        </div>
+        </GraphProvider>
       </DragContext.Provider>
     </>
   );

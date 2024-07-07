@@ -5,19 +5,19 @@ export const generateAxonPath = (start: Coordinate, end: Coordinate, direction: 
 
   genPath.push(start);
 
-  let { row: currentRow, col: currentCol } = genPath[genPath.length - 1];
+  let { x: currentRow, y: currentCol } = genPath[genPath.length - 1];
 
-  while (currentCol !== end.col) {
-    genPath.push({ row: currentRow, col: currentCol });
-    currentCol += currentCol < end.col ? 1 : -1; // Handles leftwards movement
+  while (currentCol !== end.y) {
+    genPath.push({ x: currentRow, y: currentCol });
+    currentCol += currentCol < end.y ? 1 : -1; // Handles leftwards movement
   }
 
-  while (currentRow !== end.row) {
-    genPath.push({ row: currentRow, col: currentCol });
-    currentRow += currentRow < end.row ? 1 : -1; // Handles upwards movement
+  while (currentRow !== end.x) {
+    genPath.push({ x: currentRow, y: currentCol });
+    currentRow += currentRow < end.x ? 1 : -1; // Handles upwards movement
   }
 
-  genPath.push({ row: currentRow, col: currentCol});
+  genPath.push({ x: currentRow, y: currentCol});
 
   return genPath;
 }

@@ -1,6 +1,6 @@
 export interface Coordinate {
-  row: number;
-  col: number;
+  x: number;
+  y: number;
 }
 
 export enum Direction {

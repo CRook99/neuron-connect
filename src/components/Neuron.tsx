@@ -71,11 +71,11 @@ export const Neuron = (props: NeuronProps) => {
             >
               {/* TODO change hard coded values */}
               {icons.map(({ icon, direction }, index) =>
-                (direction === Direction.UP && props.coord.row == 0) ||
-                (direction === Direction.DOWN && props.coord.row == 7) ||
-                (direction === Direction.LEFT && props.coord.col == 0) ||
+                (direction === Direction.UP && props.coord.x == 0) ||
+                (direction === Direction.DOWN && props.coord.x == 7) ||
+                (direction === Direction.LEFT && props.coord.y == 0) ||
                 (direction === Direction.RIGHT &&
-                  props.coord.col == 11) ? null : (
+                  props.coord.y == 11) ? null : (
                   <motion.div
                     key={index}
                     className={`icon ${direction}`}
