@@ -6,6 +6,7 @@ import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
 import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";
 import { useDragContext } from "../contexts/DragContext";
+import { useGraphContext } from "../contexts/GraphContext";
 
 interface SlotProps {
   coord: Coordinate;
@@ -13,6 +14,8 @@ interface SlotProps {
 
 const Slot = (props: SlotProps) => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
+
+  const graph = useGraphContext();
 
   const { handleNewHover } = useDragContext();
 
@@ -22,7 +25,10 @@ const Slot = (props: SlotProps) => {
 
   const [{ isOver }, drop] = useDrop({
     accept: "neuron",
-    drop: (item: any) => addNeuron(item.props.type),
+    drop: (item: any) => {
+      addNeuron(item.props.type);
+      graph.setOccupancy(props.coord);
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),

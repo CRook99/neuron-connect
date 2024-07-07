@@ -6,29 +6,28 @@ export class Graph {
     rows: number;
     cols: number;
     adjacencyList: Map<string, Node[]>;
-    occupied: Map<string, boolean>;
+    occupied: Set<string>;
 
     constructor(rows: number, cols: number) {
         this.rows = rows;
         this.cols = cols;
         this.adjacencyList = new Map();
-        this.occupied = new Map();
+        this.occupied = new Set();
         this.createGrid();
     }
 
     private createNodeFromCoord(coord: Coordinate): Node {
-        return {x: coord.x, y: coord.y, id: this.createNodeId(coord.x, coord.y)}
+        return {x: coord.x, y: coord.y, id: this.createNodeId(coord)}
     }
 
-    private createNodeId(x: number, y: number): string {
-        return `${x}_${y}`;
+    private createNodeId(coord: Coordinate): string {
+        return `${coord.x}_${coord.y}`;
     }
 
     addNode(node: Node) {
         if (this.adjacencyList.has(node.id)) return;
 
         this.adjacencyList.set(node.id, []);
-        this.occupied.set(node.id, false);
     }
 
     addEdge(a: Node, b: Node) {
@@ -36,20 +35,31 @@ export class Graph {
         this.adjacencyList.get(b.id)?.push(a);
     }
 
+    setOccupancy(coord: Coordinate) {
+        const id = this.createNodeId(coord);
+        if (!this.adjacencyList.has(id)) return;
+        console.log(`Occupying ${coord.x}_${coord.y}`);
+        this.occupied.add(id);
+    }
+
+    removeOccupancy(coord: Coordinate) {
+        this.occupied.delete(this.createNodeId(coord)!);
+    }
+
     createGrid() {
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
-                const node: Node = { x: row, y: col, id: this.createNodeId(row, col) };
+                const node: Node = { x: row, y: col, id: this.createNodeId({x: row, y: col}) };
                 this.addNode(node);
 
                 if (col < this.cols - 1) {
-                    const right: Node = { x: row, y: col + 1, id: this.createNodeId(row, col + 1)};
+                    const right: Node = { x: row, y: col + 1, id: this.createNodeId({x: row, y: col + 1})};
                     this.addNode(right);
                     this.addEdge(node, right);
                 }
 
                 if (row < this.rows - 1) {
-                    const bottom: Node = { x: row + 1, y: col, id: this.createNodeId(row + 1, col)};
+                    const bottom: Node = { x: row + 1, y: col, id: this.createNodeId({x: row + 1, y: col})};
                     this.addNode(bottom);
                     this.addEdge(node, bottom);
                 }
@@ -68,15 +78,13 @@ export class Graph {
 
         while (queue.length > 0) {
             const node = queue.shift()!;
-            console.log(`Visiting ${node.x},${node.y}`);
             if (node.id === endNode.id) {
                 return this.constructPath(parent, startNode, endNode);
             }
 
 
             for (const neighbour of this.adjacencyList.get(node.id) || []) {
-                console.log(`Has neighbour ${node.x},${node.y}`);
-                if (!visited.has(neighbour.id) && !this.occupied.get(neighbour.id)) {
+                if (!visited.has(neighbour.id) && !this.occupied.has(neighbour.id)) {
                     visited.add(neighbour.id);
                     parent.set(neighbour.id, node);
                     queue.push(neighbour);

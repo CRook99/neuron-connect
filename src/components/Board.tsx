@@ -40,9 +40,10 @@ const Board = (props: BoardProps) => {
   const graph = useGraphContext();
 
   const handleNewHover = (coord: Coordinate, isOnNeuron: boolean) => {
-    if (isDragging && startNeuron) {
-      const newPath: Coordinate[] | null = graph.bfs(startNeuron, coord);
+    if (isDragging && pathStart) {
+      const newPath: Coordinate[] | null = graph.bfs(pathStart, coord);
       if (newPath) {
+        newPath.unshift(startNeuron!);
         setTempAxon(newPath);
         setOnNeuron(isOnNeuron);
       } else {
@@ -53,18 +54,23 @@ const Board = (props: BoardProps) => {
 
   const handleDragStart = (coord: Coordinate, direction: Direction) => {
     setStartNeuron(coord);
+    setPathStart(augmentCoordWithDir(coord, direction));
     setOutDirection(direction);
     setIsDragging(true);
-    console.log("handledragstart");
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (!isDragging || !startNeuron) return;
+    if (!isDragging || !pathStart) return;
 
     if (onNeuron) {
-      const newPath: Coordinate[] | null = graph.bfs(startNeuron, coord);
+      const newPath: Coordinate[] | null = graph.bfs(pathStart, coord);
       if (newPath) {
+        console.log("Axon created");
+        newPath.unshift(startNeuron!);
         setAxons([...axons, newPath]);
+        for (let c of newPath) {
+          graph.setOccupancy(c);
+        }
       }
     }
 
