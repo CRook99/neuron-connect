@@ -19,8 +19,10 @@
 }
 
 .neuron img {
-  width: 125%;
-  height: 125%;
+  width: 140%;
+  height: 140%;
+
+  z-index: 9998;
 
   user-select: none;
   pointer-events: none;
@@ -41,6 +43,8 @@
   position: absolute;
   font-size: 24px;
   pointer-events: all;
+
+  z-index: 9999;
 }
 
 .up {

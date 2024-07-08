@@ -1,19 +1,19 @@
+import { neuronData } from "../neuronData";
 import NeuronDND from "./NeuronDND";
 import "./NeuronSupply.css";
-import { Neurons } from "./Neurons";
+import { Neurons } from "../neuronData";
 
 interface NeuronSupplyProps {
-  title: string;
   type: Neurons;
-  imgPath: string;
 }
 
 const NeuronSupply = (props: NeuronSupplyProps) => {
+  const data = neuronData[props.type];
   return (
     <>
       <div className="supply_container">
-        <NeuronDND imgPath={props.imgPath} type={props.type} />
-        <p className="supply_title">{props.title}</p>
+        <NeuronDND imgPath={data.imgPath} type={props.type} />
+        <p className="supply_title">{data.title}</p>
       </div>
     </>
   );

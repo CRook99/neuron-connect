@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Slot.css";
 import { useDrop } from "react-dnd";
-import { Neurons } from "./Neurons";
+import { Neurons } from "../neuronData";
 import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
 import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";

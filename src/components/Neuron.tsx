@@ -1,6 +1,6 @@
 import "./Neuron.css";
 
-import { Neurons } from "./Neurons";
+import { Neurons } from "../neuronData";
 import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
@@ -14,16 +14,12 @@ import {
   faCircleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { neuronData } from "../neuronData";
 
 interface NeuronProps {
   neuronType: Neurons;
   coord: Coordinate;
 }
-
-const imageMap = {
-  [Neurons.Excitatory]: "./NeuronA.png",
-  [Neurons.Inhibitory]: "./NeuronB.png",
-};
 
 const icons = [
   { icon: faCircleUp, direction: Direction.UP },
@@ -46,8 +42,6 @@ export const Neuron = (props: NeuronProps) => {
     console.log("dragstart");
   };
 
-  const imageSrc = imageMap[props.neuronType];
-
   return (
     <>
       <motion.div
@@ -58,7 +52,7 @@ export const Neuron = (props: NeuronProps) => {
         onMouseUp={handleMouseUp}
       >
         <motion.div className="neuron">
-          <img src={imageSrc} />
+          <img src={neuronData[props.neuronType].imgPath} />
         </motion.div>
         <AnimatePresence>
           {isHovered && !pathStart && (

@@ -1,22 +1,15 @@
 import "./Dock.css";
 import NeuronSupply from "./NeuronSupply";
-import { Neurons } from "./Neurons";
+import { Neurons } from "../neuronData";
 
 const Dock = () => {
   return (
     <>
       <div className="dock">
         <div className="sub-neurons">
-          <NeuronSupply
-            title="Excitatory"
-            type={Neurons.Excitatory}
-            imgPath="/NeuronA.png"
-          />
-          <NeuronSupply
-            title="Inhibitory"
-            type={Neurons.Inhibitory}
-            imgPath="/NeuronB.png"
-          />
+          {Object.keys(Neurons).map((neuronType) => (
+            <NeuronSupply key={neuronType} type={neuronType as Neurons} />
+          ))}
         </div>
         <div className="sub-tools"></div>
       </div>

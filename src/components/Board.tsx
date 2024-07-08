@@ -1,7 +1,7 @@
 import Slot from "./Slot";
 import "./Board.css";
 import Axon from "./Axon";
-import { DragProvider, useDragContext } from "../contexts/DragContext";
+import { useDragContext } from "../contexts/DragContext";
 
 interface BoardProps {
   rows: number;
