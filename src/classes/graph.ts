@@ -103,14 +103,12 @@ export class Graph {
 
     constructPath(parents: Map<string, { node: Node, direction: Direction }>, start: Node, end: Node): Coordinate[] {
         const path: Coordinate[] = [end];
-        console.log('cons');
         let nodeId = end.id;
         while (nodeId !== start.id) {
             const { node } = parents.get(nodeId)!;
             path.unshift(node);
             nodeId = node.id;
         }
-        console.log('doen consruct');
         return path;
     }
 
