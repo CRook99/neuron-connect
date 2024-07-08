@@ -6,9 +6,10 @@ import React from "react";
 
 interface AxonProps {
   path: Coordinate[];
+  isTemporary: boolean;
 }
 
-const Axon: React.FC<AxonProps> = ({ path }) => {
+const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
   //const [signalPosition, setSignalPosition] = useState<number>(0);
 
   return (
@@ -39,6 +40,7 @@ const Axon: React.FC<AxonProps> = ({ path }) => {
               stroke="#FF9900"
               strokeLinecap="round"
               strokeWidth="5"
+              opacity={isTemporary ? 0.5 : 1}
             />
             {path[index + 1] && (
               <image
@@ -48,7 +50,7 @@ const Axon: React.FC<AxonProps> = ({ path }) => {
                 width={imageSize}
                 height={imageSize}
                 transform={`${y1 === y2 ? `rotate(90, ${midX}, ${midY})` : ""}`}
-                opacity={0.6}
+                opacity={isTemporary ? 0.3 : 0.6}
               ></image>
             )}
           </React.Fragment>

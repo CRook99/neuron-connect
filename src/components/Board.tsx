@@ -33,9 +33,9 @@ const Board = (props: BoardProps) => {
           {board}
           <div className="axons">
             {axons.map((axon, index) => (
-              <Axon key={index} path={axon} />
+              <Axon key={index} path={axon} isTemporary={false} />
             ))}
-            <Axon path={temporaryAxon} />
+            <Axon path={temporaryAxon} isTemporary={true} />
           </div>
         </div>
       </div>
