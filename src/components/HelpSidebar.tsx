@@ -30,12 +30,11 @@ const HelpSidebar = (props: SidebarProps) => {
 
           <Slider {...sliderSettings} className="slider">
             <div>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse convallis lacus libero, sed tristique tellus laoreet
-                quis. Nam sed odio nunc. Morbi imperdiet, ante in elementum
-                pretium, ex est maximus diam, sed fringilla diam ipsum a augue.
-              </p>
+              <h2>Placing elements</h2>
+
+              <video width="300" height="300" autoPlay loop muted>
+                <source src="../public/the skeleton appears.mp4" />
+              </video>
             </div>
 
             <div>
