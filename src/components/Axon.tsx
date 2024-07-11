@@ -12,17 +12,24 @@ interface AxonProps {
 const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
   //const [signalPosition, setSignalPosition] = useState<number>(0);
 
+  const coord2pixel = (path: Coordinate[]) => {
+    return path.map((segment) => {
+      const x = segment.y * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
+      const y = segment.x * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
+
+      return { x, y };
+    });
+  };
+
+  const pathPixels = coord2pixel(path);
+
   return (
     <svg className="axon">
-      {path.map((segment, index) => {
-        const x1 = segment.y * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
-        const y1 = segment.x * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
-        const x2 =
-          (path[index + 1]?.y ?? segment.y) * TOTAL_SLOT_SIZE +
-          0.5 * TOTAL_SLOT_SIZE;
-        const y2 =
-          (path[index + 1]?.x ?? segment.x) * TOTAL_SLOT_SIZE +
-          0.5 * TOTAL_SLOT_SIZE;
+      {pathPixels.map((segment, index) => {
+        const x1 = segment.x;
+        const y1 = segment.y;
+        const x2 = pathPixels[index + 1]?.x ?? segment.x;
+        const y2 = pathPixels[index + 1]?.y ?? segment.y;
 
         const midX = (x1 + x2) / 2;
         const midY = (y1 + y2) / 2;
@@ -42,7 +49,7 @@ const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
               strokeWidth="5"
               opacity={isTemporary ? 0.5 : 1}
             />
-            {path[index + 1] && (
+            {pathPixels[index + 1] && (
               <image
                 href="./SchwannCell.png"
                 x={midX - imageSize / 2}
