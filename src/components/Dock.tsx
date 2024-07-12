@@ -1,6 +1,6 @@
 import "./Dock.css";
 import NeuronSupply from "./NeuronSupply";
-import { Neurons } from "../neuronData";
+import { Neurons } from "../data/neuronData";
 
 const Dock = () => {
   return (

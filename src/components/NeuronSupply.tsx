@@ -1,7 +1,7 @@
-import { neuronData } from "../neuronData";
+import { neuronData } from "../data/neuronData";
 import NeuronDND from "./NeuronDND";
 import "./NeuronSupply.css";
-import { Neurons } from "../neuronData";
+import { Neurons } from "../data/neuronData";
 
 interface NeuronSupplyProps {
   type: Neurons;

@@ -1,7 +1,7 @@
 import "./NeuronDND.css";
 import { useDrag } from "react-dnd";
 import { motion } from "framer-motion";
-import { Neurons } from "../neuronData";
+import { Neurons } from "../data/neuronData";
 
 interface NeuronDNDProps {
   imgPath: string;
