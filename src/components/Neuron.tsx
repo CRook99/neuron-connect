@@ -4,7 +4,7 @@ import { Neurons } from "../data/neuronData";
 import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import {
@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { neuronData } from "../data/neuronData";
 import { MINIMUM_FREQUENCY } from "../data/frequencyData";
+import { useFrequencyContext } from "../contexts/FrequencyContext";
 
 interface NeuronProps {
   neuronType: Neurons;
@@ -32,7 +33,14 @@ const icons = [
 export const Neuron = (props: NeuronProps) => {
   const { pathStart, handleDragStart, handleDragEnd } = useDragContext();
   const [isHovered, setIsHovered] = useState(false);
-  const [frequency, setFrequency] = useState(MINIMUM_FREQUENCY);
+  const [freqText, setFreqText] = useState("");
+
+  const { step, frequencyGraph } = useFrequencyContext();
+
+  useEffect(() => {
+    setFreqText(frequencyGraph.queryGraphForFrequency(props.coord).toString());
+    console.log("update");
+  }, [step]);
 
   const handleMouseDown = (direction: Direction) => {
     handleDragStart(props.coord, direction);
@@ -55,6 +63,7 @@ export const Neuron = (props: NeuronProps) => {
       >
         <motion.div className="neuron">
           <img src={neuronData[props.neuronType].imgPath} />
+          <p>{freqText}</p>
         </motion.div>
         <AnimatePresence>
           {isHovered && !pathStart && (

@@ -28,6 +28,11 @@
   pointer-events: none;
 }
 
+.neuron p {
+  position: absolute;
+  z-index: 9999;
+}
+
 .icons-container {
   position: absolute;
   width: calc(100% + 40px);

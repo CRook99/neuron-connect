@@ -8,12 +8,27 @@ import HelpButton from "../components/HelpButton";
 import HelpSidebar from "../components/HelpSidebar";
 import { Link } from "react-router-dom";
 import { NUM_COLS, NUM_ROWS } from "../utils/constants";
+import { useFrequencyContext } from "../contexts/FrequencyContext";
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
 
+  const { step, stepForward, stepBackward } = useFrequencyContext();
+
+  const handleStepForward = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    stepForward();
+  };
+
+  const handleStepBackward = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    event.preventDefault;
+    stepBackward();
+  };
+
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <Header>
         <HelpButton
           isHelpActive={isHelpActive}
@@ -24,14 +39,20 @@ const Home = () => {
         </Link>
       </Header>
 
+      <button onClick={handleStepForward}>Step forward</button>
+      <button onClick={handleStepBackward}>Step backward</button>
+      <p>Step: {step}</p>
+
       <HelpSidebar isHelpActive={isHelpActive} />
 
-      <div>
-        <Board rows={NUM_ROWS} cols={NUM_COLS} />
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div>
+          <Board rows={NUM_ROWS} cols={NUM_COLS} />
+        </div>
 
-      <Dock />
-    </DndProvider>
+        <Dock />
+      </DndProvider>
+    </>
   );
 };
 

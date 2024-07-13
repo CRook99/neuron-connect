@@ -8,6 +8,7 @@ import {
 import { Coordinate, Direction } from "../utils/types";
 import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
 import { useGraphContext } from "./GraphContext";
+import { useFrequencyContext } from "./FrequencyContext";
 
 interface DragContextType {
   startNeuron: Coordinate | null;
@@ -40,6 +41,7 @@ export const DragProvider: React.FC<{ children: ReactNode }> = ({
   const [isDragging, setIsDragging] = useState(false);
 
   const graph = useGraphContext();
+  const { frequencyGraph } = useFrequencyContext();
 
   const handleDragStart = (coord: Coordinate, direction: Direction) => {
     setStartNeuron(coord);
@@ -64,6 +66,7 @@ export const DragProvider: React.FC<{ children: ReactNode }> = ({
         for (let c of newPath) {
           graph.setOccupancy(c, "Axon");
         }
+        frequencyGraph.addEdge(startNeuron!, coord);
       }
     }
 
