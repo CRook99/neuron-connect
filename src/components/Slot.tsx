@@ -53,7 +53,14 @@ const Slot = (props: SlotProps) => {
         style={style}
         onMouseEnter={() => handleNewHover(props.coord, neuron ? true : false)}
       >
-        {neuron ? <>{neuron}</> : <img className="peg" src="./Peg.png" />}
+        {neuron ? (
+          <>{neuron}</>
+        ) : (
+          <svg width={16} height={16}>
+            <circle cx={8} cy={8} r={6} fill={"#B7B7B7"} />
+            <circle cx={8} cy={8} r={5} fill={"#45563C"} />
+          </svg>
+        )}
       </div>
     </>
   );
