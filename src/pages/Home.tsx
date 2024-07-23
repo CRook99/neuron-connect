@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { NUM_COLS, NUM_ROWS } from "../utils/constants";
 import { useFrequencyContext } from "../contexts/FrequencyContext";
 import PersistentButton from "../components/PersistentButton";
+import SettingsSidebar from "../components/SettingsSidebar";
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
@@ -34,12 +35,18 @@ const Home = () => {
         <PersistentButton
           text="Help"
           isActive={isHelpActive}
-          onClick={() => setIsHelpActive(!isHelpActive)}
+          onClick={() => {
+            setIsHelpActive(!isHelpActive);
+            setIsSettingsActive(false);
+          }}
         />
         <PersistentButton
           text="Settings"
           isActive={isSettingsActive}
-          onClick={() => setIsSettingsActive(!isSettingsActive)}
+          onClick={() => {
+            setIsSettingsActive(!isSettingsActive);
+            setIsHelpActive(false);
+          }}
         />
         <Link to="/about">
           <div>About</div>
@@ -50,7 +57,8 @@ const Home = () => {
       <button onClick={handleStepBackward}>Step backward</button>
       <p>Step: {step}</p>
 
-      <HelpSidebar isHelpActive={isHelpActive} />
+      <HelpSidebar isActive={isHelpActive} />
+      <SettingsSidebar isActive={isSettingsActive} />
 
       <DndProvider backend={HTML5Backend}>
         <div>

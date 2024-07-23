@@ -1,12 +1,13 @@
 import "./HelpSidebar.css";
 import Slider from "react-slick";
-import { motion } from "framer-motion";
+import Sidebar from "./Sidebar";
+import { FC } from "react";
 
-interface SidebarProps {
-  isHelpActive: boolean;
+interface HelpSidebarProps {
+  isActive: boolean;
 }
 
-const HelpSidebar = (props: SidebarProps) => {
+const HelpSidebar: FC<HelpSidebarProps> = ({ isActive }) => {
   // Settings for carousel
   const sliderSettings = {
     dots: true,
@@ -17,33 +18,23 @@ const HelpSidebar = (props: SidebarProps) => {
   };
 
   return (
-    <>
-      <motion.div
-        className="container"
-        layout
-        initial={{ x: "100%" }}
-        animate={{ x: props.isHelpActive ? "0%" : "100%" }}
-        transition={{ duration: 0.4, ease: "circOut" }}
-      >
-        <div className="sidebar">
-          <h1>How to use NeuroConnect</h1>
+    <Sidebar isActive={isActive}>
+      <h1>How to use NeuroConnect</h1>
 
-          <Slider {...sliderSettings} className="slider">
-            <div>
-              <h2>Placing elements</h2>
+      <Slider {...sliderSettings} className="slider">
+        <div>
+          <h2>Placing elements</h2>
 
-              <video width="300" height="300" autoPlay loop muted>
-                <source src="../public/the skeleton appears.mp4" />
-              </video>
-            </div>
-
-            <div>
-              <h2>Types of neurons</h2>
-            </div>
-          </Slider>
+          <video width="300" height="300" autoPlay loop muted>
+            <source src="../public/the skeleton appears.mp4" />
+          </video>
         </div>
-      </motion.div>
-    </>
+
+        <div>
+          <h2>Types of neurons</h2>
+        </div>
+      </Slider>
+    </Sidebar>
   );
 };
 
