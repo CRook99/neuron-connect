@@ -17,8 +17,9 @@ class Node {
     }
 
     calculateNewFrequency() {
-        const totalInput = this.incoming.reduce((sum, current) => sum + current.frequency, 0);
-    
+        const totalInput = this.incoming.reduce((sum, current) => sum + (current.frequency * (current.type === Neurons.Excitatory ? 1 : -1 )), 0);
+        console.log(totalInput);    
+
         let output;
         if (totalInput <= ACTIVATION_THRESHOLD) {
             output = TONIC_FREQUENCY;
@@ -27,8 +28,6 @@ class Node {
         } else {
             output = (SLOPE * totalInput) + Y_INTERCEPT;
         }
-    
-        output *= (this.type === Neurons.Excitatory ? 1 : -1);
             
         this.frequencyBuffer = output;
     }
