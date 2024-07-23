@@ -1,12 +1,16 @@
-import { useState } from "react";
-import "./HelpButton.css";
+import { FC, useState } from "react";
 
-interface HelpButtonProps {
-  isHelpActive: boolean;
+interface PersistentButtonProps {
+  text: string;
+  isActive: boolean;
   onClick: () => void;
 }
 
-const HelpButton = (props: HelpButtonProps) => {
+const PersistentButton: FC<PersistentButtonProps> = ({
+  text,
+  isActive,
+  onClick,
+}) => {
   const [hovered, setHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -19,11 +23,7 @@ const HelpButton = (props: HelpButtonProps) => {
 
   const style = {
     transition: "background-color 0.1s ease",
-    backgroundColor: props.isHelpActive
-      ? "#ddc6bd"
-      : hovered
-      ? "#e4d2cb"
-      : "#F4EDEA",
+    backgroundColor: isActive ? "#ddc6bd" : hovered ? "#e4d2cb" : "#F4EDEA",
     cursor: "pointer",
   };
 
@@ -32,14 +32,14 @@ const HelpButton = (props: HelpButtonProps) => {
       <div
         className="button"
         style={style}
-        onClick={props.onClick}
+        onClick={onClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        Help
+        {text ? text : "NONE"}
       </div>
     </>
   );
 };
 
-export default HelpButton;
+export default PersistentButton;
