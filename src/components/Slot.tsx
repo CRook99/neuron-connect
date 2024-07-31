@@ -7,7 +7,7 @@ import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";
 import { useDragContext } from "../contexts/DragContext";
 import { useGraphContext } from "../contexts/GraphContext";
-import { useFrequencyContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/FrequencyContext";
 
 interface SlotProps {
   coord: Coordinate;
@@ -17,7 +17,7 @@ const Slot = (props: SlotProps) => {
   const [neuron, setNeuron] = useState<React.ReactElement | null>(null);
 
   const graph = useGraphContext();
-  const { frequencyGraph } = useFrequencyContext();
+  const { frequencyGraph } = useSimulationContext();
 
   const { handleNewHover } = useDragContext();
 

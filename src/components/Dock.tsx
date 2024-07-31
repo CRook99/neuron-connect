@@ -2,10 +2,10 @@ import "./Dock.css";
 import NeuronSupply from "./NeuronSupply";
 import { Neurons } from "../data/neuronData";
 import SimulationButton from "./SimulationButton";
-import { useFrequencyContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/FrequencyContext";
 
 const Dock = () => {
-  const { stepForward, stepBackward } = useFrequencyContext();
+  const { step, stepForward, stepBackward } = useSimulationContext();
   return (
     <>
       <div className="dock">
@@ -21,11 +21,19 @@ const Dock = () => {
             onClick={stepBackward}
             svgPath="/svg/backward-step-solid.svg"
           />
-          <SimulationButton
-            label="Play"
-            onClick={() => console.log("Play!")}
-            svgPath="/svg/play-solid.svg"
-          />
+          {step == 0 ? (
+            <SimulationButton
+              label="Play"
+              onClick={() => console.log("Play!")}
+              svgPath="/svg/play-solid.svg"
+            />
+          ) : (
+            <SimulationButton
+              label={step.toString()}
+              onClick={() => console.log("Play!")}
+              svgPath="/svg/play-solid.svg"
+            />
+          )}
           <SimulationButton
             label="Step Forward"
             onClick={stepForward}

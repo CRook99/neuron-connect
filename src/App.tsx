@@ -4,13 +4,13 @@ import About from "./pages/About";
 import { GraphProvider } from "./contexts/GraphContext";
 import { NUM_COLS, NUM_ROWS } from "./utils/constants";
 import { DragProvider } from "./contexts/DragContext";
-import { FrequencyProvider } from "./contexts/FrequencyContext";
+import { SimulationProvider } from "./contexts/FrequencyContext";
 
 const App = () => {
   return (
     <>
       <GraphProvider rows={NUM_ROWS} cols={NUM_COLS}>
-        <FrequencyProvider>
+        <SimulationProvider>
           <DragProvider>
             <Router>
               <Routes>
@@ -19,7 +19,7 @@ const App = () => {
               </Routes>
             </Router>
           </DragProvider>
-        </FrequencyProvider>
+        </SimulationProvider>
       </GraphProvider>
     </>
   );

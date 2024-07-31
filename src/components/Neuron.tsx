@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { neuronData } from "../data/neuronData";
 import { MINIMUM_FREQUENCY } from "../data/frequencyData";
-import { useFrequencyContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/FrequencyContext";
 
 interface NeuronProps {
   neuronType: Neurons;
@@ -35,7 +35,7 @@ export const Neuron = (props: NeuronProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [freqText, setFreqText] = useState("");
 
-  const { step, frequencyGraph } = useFrequencyContext();
+  const { step, frequencyGraph } = useSimulationContext();
 
   useEffect(() => {
     setFreqText(frequencyGraph.queryGraphForFrequency(props.coord).toString());

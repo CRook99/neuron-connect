@@ -7,27 +7,12 @@ import Header from "../components/Header";
 import HelpSidebar from "../components/HelpSidebar";
 import { Link } from "react-router-dom";
 import { NUM_COLS, NUM_ROWS } from "../utils/constants";
-import { useFrequencyContext } from "../contexts/FrequencyContext";
 import PersistentButton from "../components/PersistentButton";
 import SettingsSidebar from "../components/SettingsSidebar";
 
 const Home = () => {
   const [isHelpActive, setIsHelpActive] = useState(false);
   const [isSettingsActive, setIsSettingsActive] = useState(false);
-
-  const { step, stepForward, stepBackward } = useFrequencyContext();
-
-  const handleStepForward = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    stepForward();
-  };
-
-  const handleStepBackward = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    event.preventDefault;
-    stepBackward();
-  };
 
   return (
     <>
@@ -52,10 +37,6 @@ const Home = () => {
           <div>About</div>
         </Link>
       </Header>
-
-      <button onClick={handleStepForward}>Step forward</button>
-      <button onClick={handleStepBackward}>Step backward</button>
-      <p>Step: {step}</p>
 
       <HelpSidebar isActive={isHelpActive} />
       <SettingsSidebar isActive={isSettingsActive} />

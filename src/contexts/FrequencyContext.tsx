@@ -1,24 +1,24 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import { FrequencyGraph } from "../classes/frequencyGraph";
 
-interface FrequencyContextType {
+interface SimulationContextType {
   frequencyGraph: FrequencyGraph;
   step: number;
   stepForward: () => void;
   stepBackward: () => void;
 }
 
-const FrequencyContext = createContext<FrequencyContextType | null>(null);
+const SimulationContext = createContext<SimulationContextType | null>(null);
 
-export const useFrequencyContext = (): FrequencyContextType => {
-  const context = useContext(FrequencyContext);
+export const useSimulationContext = (): SimulationContextType => {
+  const context = useContext(SimulationContext);
   if (context === null) {
     throw new Error("useFrequencyContext used outside of FrequencyProvider");
   }
   return context;
 };
 
-export const FrequencyProvider: React.FC<{ children: ReactNode }> = ({
+export const SimulationProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [frequencyGraph] = useState(() => new FrequencyGraph());
@@ -37,10 +37,10 @@ export const FrequencyProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <FrequencyContext.Provider
+    <SimulationContext.Provider
       value={{ frequencyGraph, step, stepForward, stepBackward }}
     >
       {children}
-    </FrequencyContext.Provider>
+    </SimulationContext.Provider>
   );
 };
