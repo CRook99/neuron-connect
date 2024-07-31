@@ -10,6 +10,7 @@ class Node {
     frequencyBuffer: number = 0; // Holds new frequency until all nodes have calculated new frequencies
     incoming: Node[] = [];
     outgoing: Node[] = [];
+    history: number[] = [];
 
     constructor(type: Neurons, coord: Coordinate) {
         this.type = type;
@@ -41,6 +42,8 @@ class Node {
 export class FrequencyGraph {
     nodes: Map<string, Node> = new Map();
 
+    history: Map<string, number[]> = new Map();
+
     addNode(type: Neurons, coord: Coordinate) {
         if (this.nodes.has(this.coordToId(coord))) return;
 
@@ -64,6 +67,7 @@ export class FrequencyGraph {
         this.nodes.get(id)!.outgoing.forEach(receiver => {
             receiver.incoming = receiver.incoming.filter(n => n)
         });
+        this.nodes.delete(id);
     }
 
     queryGraphForFrequency(coord: Coordinate) {
@@ -75,12 +79,24 @@ export class FrequencyGraph {
         return this.nodes.get(id)!.frequency;
     }
 
-    step() {
+    setStep() {
         this.nodes.forEach((node) => {
             node.calculateNewFrequency();
         })
         this.nodes.forEach((node) => {
             node.loadNewFrequency();
+        })
+    }
+
+    storeStep(step: number) {
+        this.nodes.forEach((node) => {
+            node.history[step] = node.frequency;
+        })
+    }
+
+    loadStep(step: number) {
+        this.nodes.forEach((node) => {
+            node.frequency = node.history[step];
         })
     }
 

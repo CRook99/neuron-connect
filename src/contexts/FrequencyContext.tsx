@@ -23,10 +23,12 @@ export const FrequencyProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [frequencyGraph] = useState(() => new FrequencyGraph());
   const [step, setStep] = useState(0);
+  const [maxStep, setMaxStep] = useState(0);
 
   const stepForward = () => {
-    frequencyGraph.step();
+    frequencyGraph.setStep();
     setStep(step + 1);
+    setMaxStep(step);
   };
 
   const stepBackward = () => {
