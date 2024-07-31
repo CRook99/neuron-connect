@@ -25,12 +25,9 @@
 .sub-neurons {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-around;
 
-  width: 70%;
-  height: 100%;
-
+  width: 40%;
   border-right: 2px solid #1F271B;
 }
 
@@ -39,6 +36,18 @@
   flex-direction: row;
   align-items: center;
 
+  width: 30%;
+  height: 100%;
+
+  border-right: 2px solid #1F271B;
+}
+
+.sub-simulation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
   width: 30%;
   height: 100%;
 }

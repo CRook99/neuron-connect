@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+.simulation-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 30%;
+  height: 100%;
+}
+
+.simulation-button__icon {
+  width: auto;
+  height: 3rem;
+  margin-top: 1rem;
+  color: #1F271B;
+}
+
+.simulation-button__label {
+  text-align: center;
+  margin-top: 5px;
+  font-family: 'Quicksand';
+  font-weight: 500;
+  font-size: 16px;
+  color: #1F271B;
+}
