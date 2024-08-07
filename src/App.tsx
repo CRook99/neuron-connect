@@ -4,7 +4,7 @@ import About from "./pages/About";
 import { GraphProvider } from "./contexts/GraphContext";
 import { NUM_COLS, NUM_ROWS } from "./utils/constants";
 import { DragProvider } from "./contexts/DragContext";
-import { SimulationProvider } from "./contexts/FrequencyContext";
+import { SimulationProvider } from "./contexts/SimulationContext";
 
 const App = () => {
   return (

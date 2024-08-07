@@ -7,7 +7,7 @@ import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";
 import { useDragContext } from "../contexts/DragContext";
 import { useGraphContext } from "../contexts/GraphContext";
-import { useSimulationContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/SimulationContext";
 
 interface SlotProps {
   coord: Coordinate;

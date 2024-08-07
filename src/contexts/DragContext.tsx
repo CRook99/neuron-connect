@@ -8,7 +8,7 @@ import {
 import { Coordinate, Direction } from "../utils/types";
 import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
 import { useGraphContext } from "./GraphContext";
-import { useSimulationContext } from "./FrequencyContext";
+import { useSimulationContext } from "./SimulationContext";
 
 interface DragContextType {
   startNeuron: Coordinate | null;

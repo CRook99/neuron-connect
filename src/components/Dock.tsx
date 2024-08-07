@@ -2,7 +2,7 @@ import "./Dock.css";
 import NeuronSupply from "./NeuronSupply";
 import { Neurons } from "../data/neuronData";
 import SimulationButton from "./SimulationButton";
-import { useSimulationContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/SimulationContext";
 
 const Dock = () => {
   const { step, stepForward, stepBackward } = useSimulationContext();

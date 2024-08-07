@@ -4,7 +4,7 @@ import { Neurons } from "../data/neuronData";
 import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import {
@@ -15,8 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { neuronData } from "../data/neuronData";
-import { MINIMUM_FREQUENCY } from "../data/frequencyData";
-import { useSimulationContext } from "../contexts/FrequencyContext";
+import { useSimulationContext } from "../contexts/SimulationContext";
 
 interface NeuronProps {
   neuronType: Neurons;
