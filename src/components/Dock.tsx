@@ -5,7 +5,8 @@ import SimulationButton from "./SimulationButton";
 import { useSimulationContext } from "../contexts/SimulationContext";
 
 const Dock = () => {
-  const { step, stepForward, stepBackward } = useSimulationContext();
+  const { step, stepForward, stepBackward, playing, beginSimulation } =
+    useSimulationContext();
   return (
     <>
       <div className="dock">
@@ -21,17 +22,17 @@ const Dock = () => {
             onClick={stepBackward}
             svgPath="/svg/backward-step-solid.svg"
           />
-          {step == 0 ? (
+          {!playing ? (
             <SimulationButton
               label="Play"
-              onClick={() => console.log("Play!")}
+              onClick={beginSimulation}
               svgPath="/svg/play-solid.svg"
             />
           ) : (
             <SimulationButton
               label={step.toString()}
-              onClick={() => console.log("Play!")}
-              svgPath="/svg/play-solid.svg"
+              onClick={() => console.log("Stop!")}
+              svgPath="/svg/square-solid.svg"
             />
           )}
           <SimulationButton

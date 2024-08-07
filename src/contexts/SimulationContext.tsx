@@ -6,6 +6,8 @@ interface SimulationContextType {
   step: number;
   stepForward: () => void;
   stepBackward: () => void;
+  playing: boolean;
+  beginSimulation: () => void;
 }
 
 const SimulationContext = createContext<SimulationContextType | null>(null);
@@ -24,6 +26,7 @@ export const SimulationProvider: React.FC<{ children: ReactNode }> = ({
   const [frequencyGraph] = useState(() => new FrequencyGraph());
   const [step, setStep] = useState(0);
   const [maxStep, setMaxStep] = useState(0);
+  const [playing, setPlaying] = useState(false);
 
   const stepForward = () => {
     frequencyGraph.setStep();
@@ -36,9 +39,20 @@ export const SimulationProvider: React.FC<{ children: ReactNode }> = ({
     setStep(step - 1);
   };
 
+  const beginSimulation = () => {
+    setPlaying(true);
+  };
+
   return (
     <SimulationContext.Provider
-      value={{ frequencyGraph, step, stepForward, stepBackward }}
+      value={{
+        frequencyGraph,
+        step,
+        stepForward,
+        stepBackward,
+        playing,
+        beginSimulation,
+      }}
     >
       {children}
     </SimulationContext.Provider>
