@@ -1,8 +1,8 @@
 export const TONIC_FREQUENCY = 1; // Equal to minimum for time being
 export const MINIMUM_FREQUENCY = 1;
 export const MAXIMUM_FREQUENCY = 20;
-export const ACTIVATION_THRESHOLD = 5;
-export const SATURATION_THRESHOLD = 20;
+export const ACTIVATION_THRESHOLD = 2;
+export const SATURATION_THRESHOLD = 15;
 
 export const SLOPE =
   (MAXIMUM_FREQUENCY - MINIMUM_FREQUENCY) /

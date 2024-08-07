@@ -1,7 +1,7 @@
 import { MINIMUM_FREQUENCY } from "../data/frequencyData";
 import { Neurons } from "../data/neuronData";
 import { Coordinate } from "../utils/types";
-import { ACTIVATION_THRESHOLD, MAXIMUM_FREQUENCY, SATURATION_THRESHOLD, SLOPE, TONIC_FREQUENCY, Y_INTERCEPT } from "../data/frequencyData";
+import { ACTIVATION_THRESHOLD, MAXIMUM_FREQUENCY, SATURATION_THRESHOLD, SLOPE, TONIC_FREQUENCY } from "../data/frequencyData";
 
 class Node {
     type: Neurons;
@@ -27,10 +27,10 @@ class Node {
         } else if (totalInput >= SATURATION_THRESHOLD) {
             output = MAXIMUM_FREQUENCY;
         } else {
-            output = (SLOPE * totalInput) + Y_INTERCEPT;
+            output = MINIMUM_FREQUENCY + ((SLOPE) * (totalInput - ACTIVATION_THRESHOLD));
         }
             
-        this.frequencyBuffer = output;
+        this.frequencyBuffer = Number(output.toFixed(1));
     }
 
     // Not performed until all nodes have calculated with previous step frequencies
