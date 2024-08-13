@@ -5,7 +5,7 @@ import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 import {
   faCircleUp,
@@ -31,24 +31,34 @@ const icons = [
 
 export const Neuron = (props: NeuronProps) => {
   const { pathStart, handleDragStart, handleDragEnd } = useDragContext();
+  const { step, frequencyGraph, playing } = useSimulationContext();
+
+  const controls = useAnimation();
+
   const [isHovered, setIsHovered] = useState(false);
   const [freqText, setFreqText] = useState("");
-
-  const { step, frequencyGraph } = useSimulationContext();
+  const [frequency, setFrequency] = useState(0);
 
   useEffect(() => {
-    setFreqText(frequencyGraph.queryGraphForFrequency(props.coord).toString());
-    console.log("update");
+    setFrequency(frequencyGraph.queryGraphForFrequency(props.coord));
+    setFreqText(frequency.toString());
+
+    controls.start({
+      scale: [1, 1.5, 1, 1],
+      transition: {
+        duration: 1 / frequency,
+        times: [0, 0.05, 0.5, 1],
+        repeat: Infinity,
+      },
+    });
   }, [step]);
 
   const handleMouseDown = (direction: Direction) => {
     handleDragStart(props.coord, direction);
-    console.log("dragstart");
   };
 
   const handleMouseUp = () => {
     handleDragEnd(props.coord);
-    console.log("dragstart");
   };
 
   return (
@@ -60,9 +70,14 @@ export const Neuron = (props: NeuronProps) => {
         whileHover={{ scale: 1.2 }}
         onMouseUp={handleMouseUp}
       >
-        <motion.div className="neuron">
+        <motion.div
+          key={`n${props.coord.x}_${props.coord.y}_${frequency}`}
+          className="neuron"
+          animate={controls}
+          initial={{ scale: 1 }}
+        >
           <img src={neuronData[props.neuronType].imgPath} />
-          <p>{freqText}</p>
+          {playing && <p>{freqText}</p>}
         </motion.div>
         <AnimatePresence>
           {isHovered && !pathStart && (
