@@ -4,7 +4,7 @@ import { Neurons } from "../data/neuronData";
 import { Coordinate, Direction } from "../utils/types";
 import { useDragContext } from "../contexts/DragContext";
 
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 import {
@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { neuronData } from "../data/neuronData";
 import { useSimulationContext } from "../contexts/SimulationContext";
+import { NUM_COLS, NUM_ROWS } from "../utils/constants";
 
 interface NeuronProps {
   neuronType: Neurons;
@@ -29,19 +30,17 @@ const icons = [
   { icon: faCircleRight, direction: Direction.RIGHT },
 ];
 
-export const Neuron = (props: NeuronProps) => {
+export const Neuron: FC<NeuronProps> = ({ neuronType, coord }) => {
   const { pathStart, handleDragStart, handleDragEnd } = useDragContext();
   const { step, frequencyGraph, playing } = useSimulationContext();
 
   const controls = useAnimation();
 
   const [isHovered, setIsHovered] = useState(false);
-  const [freqText, setFreqText] = useState("");
   const [frequency, setFrequency] = useState(0);
 
   useEffect(() => {
-    setFrequency(frequencyGraph.queryGraphForFrequency(props.coord));
-    setFreqText(frequency.toString());
+    setFrequency(frequencyGraph.queryGraphForFrequency(coord));
 
     controls.start({
       scale: [1, 1.5, 1, 1],
@@ -54,11 +53,23 @@ export const Neuron = (props: NeuronProps) => {
   }, [step]);
 
   const handleMouseDown = (direction: Direction) => {
-    handleDragStart(props.coord, direction);
+    handleDragStart(coord, direction);
   };
 
   const handleMouseUp = () => {
-    handleDragEnd(props.coord);
+    handleDragEnd(coord);
+  };
+
+  const canHaveEdgeArrow = (direction: Direction) => {
+    const conditions = {
+      [Direction.UP]: coord.x !== 0,
+      [Direction.DOWN]: coord.x !== NUM_ROWS - 1,
+      [Direction.LEFT]: coord.y !== 0,
+      [Direction.RIGHT]: coord.y !== NUM_COLS - 1,
+      [Direction.null]: false,
+    };
+
+    return conditions[direction] ?? false;
   };
 
   return (
@@ -71,13 +82,12 @@ export const Neuron = (props: NeuronProps) => {
         onMouseUp={handleMouseUp}
       >
         <motion.div
-          key={`n${props.coord.x}_${props.coord.y}_${frequency}`}
           className="neuron"
           animate={controls}
           initial={{ scale: 1 }}
         >
-          <img src={neuronData[props.neuronType].imgPath} />
-          {playing && <p>{freqText}</p>}
+          <img src={neuronData[neuronType].imgPath} />
+          {playing && <p>{frequency.toString()}</p>}
         </motion.div>
         <AnimatePresence>
           {isHovered && !pathStart && (
@@ -88,13 +98,8 @@ export const Neuron = (props: NeuronProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {/* TODO change hard coded values */}
               {icons.map(({ icon, direction }, index) =>
-                (direction === Direction.UP && props.coord.x == 0) ||
-                (direction === Direction.DOWN && props.coord.x == 7) ||
-                (direction === Direction.LEFT && props.coord.y == 0) ||
-                (direction === Direction.RIGHT &&
-                  props.coord.y == 11) ? null : (
+                !canHaveEdgeArrow(direction) ? null : (
                   <motion.div
                     key={index}
                     className={`icon ${direction}`}
