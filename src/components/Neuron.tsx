@@ -42,15 +42,19 @@ export const Neuron: FC<NeuronProps> = ({ neuronType, coord }) => {
   useEffect(() => {
     setFrequency(frequencyGraph.queryGraphForFrequency(coord));
 
-    controls.start({
-      scale: [1, 1.5, 1, 1],
-      transition: {
-        duration: 1 / frequency,
-        times: [0, 0.05, 0.5, 1],
-        repeat: Infinity,
-      },
-    });
-  }, [step]);
+    if (playing) {
+      controls.start({
+        scale: [1, 1.5, 1, 1],
+        transition: {
+          duration: 1 / frequency,
+          times: [0, 0.05, 0.5, 1],
+          repeat: Infinity,
+        },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [step, playing]);
 
   const handleMouseDown = (direction: Direction) => {
     handleDragStart(coord, direction);

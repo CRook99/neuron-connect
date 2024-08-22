@@ -19,7 +19,6 @@ class Node {
 
     calculateNewFrequency() {
         const totalInput = this.incoming.reduce((sum, current) => sum + (current.frequency * (current.type === Neurons.Excitatory ? 1 : -1 )), 0);
-        console.log(totalInput);    
 
         let output;
         if (totalInput <= ACTIVATION_THRESHOLD) {
@@ -41,8 +40,6 @@ class Node {
 
 export class FrequencyGraph {
     nodes: Map<string, Node> = new Map();
-
-    history: Map<string, number[]> = new Map();
 
     addNode(type: Neurons, coord: Coordinate) {
         if (this.nodes.has(this.coordToId(coord))) return;
@@ -79,7 +76,7 @@ export class FrequencyGraph {
         return this.nodes.get(id)!.frequency;
     }
 
-    setStep() {
+    generateNextStep() {
         this.nodes.forEach((node) => {
             node.calculateNewFrequency();
         })
