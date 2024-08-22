@@ -40,13 +40,16 @@ export const Neuron: FC<NeuronProps> = ({ neuronType, coord }) => {
   const [frequency, setFrequency] = useState(0);
 
   useEffect(() => {
-    setFrequency(frequencyGraph.queryGraphForFrequency(coord));
+    // useState updates in useEffect only take effect once useEffect is finished.
+    // Cannot simply setFrequency and use it - create temporary variable
+    const newFrequency = frequencyGraph.queryGraphForFrequency(coord);
+    setFrequency(newFrequency);
 
     if (playing) {
       controls.start({
         scale: [1, 1.5, 1, 1],
         transition: {
-          duration: 1 / frequency,
+          duration: 1 / newFrequency,
           times: [0, 0.05, 0.5, 1],
           repeat: Infinity,
         },
