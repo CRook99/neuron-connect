@@ -8,6 +8,7 @@ import Neuron from "./Neuron";
 import { useDragContext } from "../contexts/DragContext";
 import { useGraphContext } from "../contexts/GraphContext";
 import { useSimulationContext } from "../contexts/SimulationContext";
+import { Stimulus } from "./Stimulus";
 
 interface SlotProps {
   coord: Coordinate;
@@ -22,7 +23,11 @@ const Slot = (props: SlotProps) => {
   const { handleNewHover } = useDragContext();
 
   const addNeuron = (type: Neurons) => {
-    setNeuron(<Neuron neuronType={type} coord={props.coord} />);
+    if (type === Neurons.Stimulus) {
+      setNeuron(<Stimulus coord={props.coord} />);
+    } else {
+      setNeuron(<Neuron neuronType={type} coord={props.coord} />);
+    }
   };
 
   const [{ isOver }, drop] = useDrop({

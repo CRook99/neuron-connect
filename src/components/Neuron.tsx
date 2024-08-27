@@ -21,6 +21,7 @@ import { NUM_COLS, NUM_ROWS } from "../utils/constants";
 interface NeuronProps {
   neuronType: Neurons;
   coord: Coordinate;
+  pFrequency?: number;
 }
 
 const icons = [
@@ -30,7 +31,7 @@ const icons = [
   { icon: faCircleRight, direction: Direction.RIGHT },
 ];
 
-export const Neuron: FC<NeuronProps> = ({ neuronType, coord }) => {
+export const Neuron: FC<NeuronProps> = ({ neuronType, coord, pFrequency }) => {
   const { pathStart, handleDragStart, handleDragEnd } = useDragContext();
   const { step, frequencyGraph, playing } = useSimulationContext();
 
@@ -42,7 +43,8 @@ export const Neuron: FC<NeuronProps> = ({ neuronType, coord }) => {
   useEffect(() => {
     // useState updates in useEffect only take effect once useEffect is finished.
     // Cannot simply setFrequency and use it - create temporary variable
-    const newFrequency = frequencyGraph.queryGraphForFrequency(coord);
+    const newFrequency =
+      pFrequency ?? frequencyGraph.queryGraphForFrequency(coord);
     setFrequency(newFrequency);
 
     if (playing) {

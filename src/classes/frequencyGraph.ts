@@ -6,7 +6,7 @@ import { ACTIVATION_THRESHOLD, MAXIMUM_FREQUENCY, SATURATION_THRESHOLD, SLOPE, T
 class Node {
     type: Neurons;
     id: string;
-    frequency: number = MINIMUM_FREQUENCY;
+    frequency: number;
     frequencyBuffer: number = 0; // Holds new frequency until all nodes have calculated new frequencies
     incoming: Node[] = [];
     outgoing: Node[] = [];
@@ -14,11 +14,20 @@ class Node {
 
     constructor(type: Neurons, coord: Coordinate) {
         this.type = type;
+        this.frequency = (type === Neurons.Stimulus ? MAXIMUM_FREQUENCY : MINIMUM_FREQUENCY);
         this.id = `${coord.x}_${coord.y}`;
     }
 
     calculateNewFrequency() {
-        const totalInput = this.incoming.reduce((sum, current) => sum + (current.frequency * (current.type === Neurons.Excitatory ? 1 : -1 )), 0);
+        // If neuron is stimulus
+        if (this.type === Neurons.Stimulus)
+        {
+            console.log('fuck');
+            this.frequencyBuffer = MAXIMUM_FREQUENCY;
+            return;
+        }
+
+        const totalInput = this.incoming.reduce((sum, current) => sum + (current.frequency * (current.type === Neurons.Inhibitory ? -1 : 1 )), 0);
 
         let output;
         if (totalInput <= ACTIVATION_THRESHOLD) {
