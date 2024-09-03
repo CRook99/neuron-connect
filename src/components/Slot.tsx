@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Slot.css";
 import { useDrop } from "react-dnd";
 import { Neurons } from "../data/neuronData";
-import { SLOT_MARGIN, SLOT_SIZE } from "../utils/constants";
+import { getSlotMargin, getSlotSize } from "../utils/constants";
 import { Coordinate } from "../utils/types";
 import Neuron from "./Neuron";
 import { useDragContext } from "../contexts/DragContext";
@@ -45,9 +45,9 @@ const Slot = (props: SlotProps) => {
   const style = {
     transition: "background-color 0.1s ease",
     backgroundColor: isOver ? "#e4d2cb" : "#F4EDEA",
-    width: SLOT_SIZE,
-    height: SLOT_SIZE,
-    margin: SLOT_MARGIN,
+    width: getSlotSize(),
+    height: getSlotSize(),
+    margin: getSlotMargin(),
   };
 
   return (

@@ -1,7 +1,7 @@
 //import { useState } from "react";
 import "./Axon.css";
 import { Coordinate } from "../utils/types";
-import { TOTAL_SLOT_SIZE } from "../utils/constants";
+import { getTotalSlotSize } from "../utils/constants";
 import React from "react";
 
 interface AxonProps {
@@ -12,8 +12,8 @@ interface AxonProps {
 const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
   const coord2pixel = (path: Coordinate[]) => {
     return path.map((segment) => {
-      const x = segment.y * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
-      const y = segment.x * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
+      const x = segment.y * getTotalSlotSize() + 0.5 * getTotalSlotSize();
+      const y = segment.x * getTotalSlotSize() + 0.5 * getTotalSlotSize();
       return { x, y };
     });
   };
