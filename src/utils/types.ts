@@ -3,6 +3,10 @@ export interface Coordinate {
   y: number;
 }
 
+export const compareCoordinates = (a: Coordinate, b: Coordinate): boolean => {
+  return a.x === b.x && a.y === b.y;
+}
+
 export enum Direction {
   UP = "up",
   DOWN = "down",

@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Coordinate, Direction } from "../utils/types";
+import { compareCoordinates, Coordinate, Direction } from "../utils/types";
 import { augmentCoordWithDir } from "../utils/augmentCoordWithDir";
 import { useGraphContext } from "./GraphContext";
 import { useSimulationContext } from "./SimulationContext";
@@ -51,7 +51,7 @@ export const DragProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const handleDragEnd = (coord: Coordinate) => {
-    if (!isDragging || !pathStart) return;
+    if (!isDragging || !pathStart || axonExists(startNeuron!, coord)) return;
 
     if (onNeuron) {
       const newPath: Coordinate[] | null = graph.bfs(
@@ -107,6 +107,24 @@ export const DragProvider: React.FC<{ children: ReactNode }> = ({
       document.removeEventListener("mouseup", handleMouseUp);
     };
   });
+
+  const axonExists = (start: Coordinate, end: Coordinate): boolean => {
+    return axons.some((axon) => {
+      if (axon.length < 2) return false;
+      // console.log(
+      //   `Comparing start: (${start.x},${start.y}) and end: (${end.x},${end.y})`
+      // );
+      // console.log(
+      //   `With axon start: (${axon[0].x},${axon[0].y}) and end: (${
+      //     axon[axon.length - 1].x
+      //   },${axon[axon.length - 1].y})`
+      // );
+      return (
+        compareCoordinates(axon[0], start) &&
+        compareCoordinates(axon[axon.length - 1], end)
+      );
+    });
+  };
 
   return (
     <DragContext.Provider
