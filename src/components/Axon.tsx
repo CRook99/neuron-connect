@@ -10,15 +10,20 @@ interface AxonProps {
 }
 
 const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
-  //const [signalPosition, setSignalPosition] = useState<number>(0);
-
   const coord2pixel = (path: Coordinate[]) => {
     return path.map((segment) => {
       const x = segment.y * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
       const y = segment.x * TOTAL_SLOT_SIZE + 0.5 * TOTAL_SLOT_SIZE;
-
       return { x, y };
     });
+  };
+
+  const getDirection = (x1: number, y1: number, x2: number, y2: number) => {
+    if (x2 > x1) return 90; // East
+    if (x2 < x1) return 270; // West
+    if (y2 > y1) return 180; // South
+    if (y2 < y1) return 0; // North
+    return 0; // Default
   };
 
   const pathPixels = coord2pixel(path);
@@ -34,8 +39,6 @@ const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
         const midX = (x1 + x2) / 2;
         const midY = (y1 + y2) / 2;
 
-        const imageSize = TOTAL_SLOT_SIZE * 0.9;
-
         return (
           <React.Fragment key={index}>
             <line
@@ -50,15 +53,18 @@ const Axon: React.FC<AxonProps> = ({ path, isTemporary }) => {
               opacity={isTemporary ? 0.5 : 1}
             />
             {pathPixels[index + 1] && (
-              <image
-                href="./SchwannCell.png"
-                x={midX - imageSize / 2}
-                y={midY - imageSize / 2}
-                width={imageSize}
-                height={imageSize}
-                transform={`${y1 === y2 ? `rotate(90, ${midX}, ${midY})` : ""}`}
-                opacity={isTemporary ? 0.3 : 0.6}
-              ></image>
+              <svg
+                x={midX}
+                y={midY}
+                style={{ transform: `rotate(${getDirection(x1, y1, x2, y2)})` }}
+              >
+                <path
+                  d="M9 18l6-6-6-6"
+                  fill="none"
+                  stroke="black"
+                  strokeWidth="2"
+                />
+              </svg>
             )}
           </React.Fragment>
         );
